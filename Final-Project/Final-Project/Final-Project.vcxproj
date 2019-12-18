@@ -139,6 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Automaton.cpp" />
+    <ClCompile Include="FileManager.cpp" />
+    <ClCompile Include="GUI.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Automaton.h" />
+    <ClInclude Include="FileManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
