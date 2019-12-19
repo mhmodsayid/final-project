@@ -4,7 +4,7 @@ using namespace std;
 
 void main() {
 
-	cout << "hiiDFGSDF";
+	cout << "TEST";
 	FileManager f;
 	
 
