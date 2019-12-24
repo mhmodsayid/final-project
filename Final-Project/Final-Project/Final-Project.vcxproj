@@ -141,7 +141,7 @@
   <ItemGroup>
     <ClCompile Include="Automaton.cpp" />
     <ClCompile Include="Controller.cpp" />
-    <ClCompile Include="EquevilanceMethod.cpp" />
+    <ClCompile Include="Equevilance.cpp" />
     <ClCompile Include="FileManager.cpp" />
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="MemberShip.cpp" />
@@ -149,7 +149,7 @@
   <ItemGroup>
     <ClInclude Include="Automaton.h" />
     <ClInclude Include="Controller.h" />
-    <ClInclude Include="EquevilanceMethod.h" />
+    <ClInclude Include="Equevilance.h" />
     <ClInclude Include="FileManager.h" />
     <ClInclude Include="MemberShip.h" />
   </ItemGroup>

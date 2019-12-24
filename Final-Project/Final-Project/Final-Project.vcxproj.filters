@@ -33,7 +33,7 @@
     <ClCompile Include="MemberShip.cpp">
       <Filter>Controller</Filter>
     </ClCompile>
-    <ClCompile Include="EquevilanceMethod.cpp">
+    <ClCompile Include="Equevilance.cpp">
       <Filter>Controller</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,14 +44,14 @@
     <ClInclude Include="MemberShip.h">
       <Filter>Controller\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="EquevilanceMethod.h">
-      <Filter>Controller\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="Automaton.h">
       <Filter>Model\Headers</Filter>
     </ClInclude>
     <ClInclude Include="FileManager.h">
       <Filter>Model\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Equevilance.h">
+      <Filter>Controller\Headers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
