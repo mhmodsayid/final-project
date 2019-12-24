@@ -140,12 +140,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Automaton.cpp" />
+    <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="EquevilanceMethod.cpp" />
     <ClCompile Include="FileManager.cpp" />
     <ClCompile Include="GUI.cpp" />
+    <ClCompile Include="MemberShip.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Automaton.h" />
+    <ClInclude Include="Controller.h" />
+    <ClInclude Include="EquevilanceMethod.h" />
     <ClInclude Include="FileManager.h" />
+    <ClInclude Include="MemberShip.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -10,6 +10,12 @@
     <Filter Include="Controller">
       <UniqueIdentifier>{d738ad85-f369-4b6c-b118-9b58f1f94b07}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Controller\Headers">
+      <UniqueIdentifier>{a149f23d-51d1-420a-bcd9-49eaaed8c624}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Model\Headers">
+      <UniqueIdentifier>{a5c3770c-8241-4733-ab87-d91926f81780}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GUI.cpp">
@@ -21,13 +27,31 @@
     <ClCompile Include="FileManager.cpp">
       <Filter>Model</Filter>
     </ClCompile>
+    <ClCompile Include="Controller.cpp">
+      <Filter>Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="MemberShip.cpp">
+      <Filter>Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="EquevilanceMethod.cpp">
+      <Filter>Controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Controller.h">
+      <Filter>Controller\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MemberShip.h">
+      <Filter>Controller\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="EquevilanceMethod.h">
+      <Filter>Controller\Headers</Filter>
+    </ClInclude>
     <ClInclude Include="Automaton.h">
-      <Filter>Model</Filter>
+      <Filter>Model\Headers</Filter>
     </ClInclude>
     <ClInclude Include="FileManager.h">
-      <Filter>Model</Filter>
+      <Filter>Model\Headers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
