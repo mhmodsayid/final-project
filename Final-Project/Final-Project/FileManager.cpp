@@ -1,2 +1,9 @@
 #include "FileManager.h"
-int x;
+
+FileManager::FileManager()
+{
+
+}
+
+
+

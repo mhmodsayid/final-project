@@ -2,10 +2,10 @@
 
 /*
 
-function Equevilance(string path){
+function Equivalence(string path){
 	read file from path 
 	build Automaton LDVFA 
-	load defult automaton TDVFA
+	load default automaton TDVFA
 	call check_equality(LDVFA,TDVFA)
 	if result is true 
 		return Yes 
@@ -16,7 +16,7 @@ function Equevilance(string path){
 **************************************************************
 
 function check_equality(Automaton LDVFA,Automaton TDVFA){
-	check equality of two automata by two way aggregation 
+	check equality of two automaton by two way aggregation 
 	define flag_first_way=0
 	define flag_second_way=0
 	first way:
@@ -75,7 +75,9 @@ function Intersection_automata(Automaton LDVFA,Automaton TDVFA){
 **************************************************************
 function check_emptiness(Automaton INA){
 	define F set of accept states of INA
-	build new set R using run BFS algorthim to collect all reachable states of INA
+	build new set R using run BFS algorithm to collect all reachable states of INA and saving all the way to this node,
+	in case it was accept we will return the path as it a negative word so we send it to learner
+
 	if F∩R is empty 
 		then return true 
 	else 

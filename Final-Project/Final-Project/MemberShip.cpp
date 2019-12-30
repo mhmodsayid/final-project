@@ -7,7 +7,7 @@ function memberShip(string path) {
 	read file from location path into a string w
 	call convert_concrete_to_pattern(w)
 	call run_w_on_A(w)
-	if the run stoped at accept state 
+	if the run stopped at accept state 
 		then return Yes
 	else 
 		return No 
@@ -16,7 +16,7 @@ function memberShip(string path) {
 *******************************************
 function convert_concrete_to_pattern(string w){
 	define u as new empty string
-	define k as the number of bounded variables of the default automata 
+	define k as the number of bounded variables of the default automaton 
 	for each character ch in w do:
 		if ch a constant letter 
 			then concatenate to u, ch
@@ -36,8 +36,8 @@ function convert_concrete_to_pattern(string w){
 
 *******************************************
 function run_w_on_A(string w){
-	load default automata A 
-	start frong the initial state of A, q0
+	load default automaton A 
+	start from the initial state of A, q0
 	for each character ch in w do:
 		go to qi in the states linked list 
 		if there is transition with ch and qi 
