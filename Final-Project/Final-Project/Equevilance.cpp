@@ -6,7 +6,7 @@ function Equevilance(string path){
 	read file from path 
 	build Automaton LDVFA 
 	load defult automaton TDVFA
-	call product_automata(LDVFA,TDVFA)
+	call check_equality(LDVFA,TDVFA)
 	if result is true 
 		return Yes 
 	else 
@@ -15,7 +15,7 @@ function Equevilance(string path){
 
 **************************************************************
 
-function product_automata(Automaton LDVFA,Automaton TDVFA){
+function check_equality(Automaton LDVFA,Automaton TDVFA){
 	check equality of two automata by two way aggregation 
 	define flag_first_way=0
 	define flag_second_way=0
