@@ -1,7 +1,5 @@
 ﻿#include "Equevilance.h"
-
 /*
-
 function Equivalence(string path){
 	read file from path 
 	build Automaton LDVFA 
@@ -10,7 +8,10 @@ function Equivalence(string path){
 	if result is true 
 		return Yes 
 	else 
-		return No the counter example
+	{
+		return counter example a
+		return NO
+	}
 }
 
 **************************************************************
@@ -20,10 +21,10 @@ function check_equality(Automaton LDVFA,Automaton TDVFA){
 	define flag_first_way=0
 	define flag_second_way=0
 	first way:
-	call complement_automata(LDVFA)
-	call Intersection_automata(CLDVFA,TDVFA)
-	call check_emptiness(INA)
-	if L(INA) is empty 
+	call CLDVFA=complement_automata(LDVFA)
+	call TxL=Intersection_automata(CLDVFA,TDVFA)
+	call check_emptiness(TxL)
+	if L(TxL) is empty 
 		then flag_first_way=1
 	else 
 		call BFS algorithm set counter example 
@@ -31,10 +32,10 @@ function check_equality(Automaton LDVFA,Automaton TDVFA){
 		return false 
 
 	second way :
-	call complement_automata(TDVFA)
-	call Intersection_automata(LDVFA,CTDVFA)
-	call check_emptiness(INA)
-		if L(INA) is empty
+	call CTDVFA=complement_automata(TDVFA)
+	call TxL=Intersection_automata(LDVFA,CTDVFA)
+	call check_emptiness(TxL)
+		if L(TxL) is empty
 		then flag_second_way=1
 	else
 		call BFS algorithm set counter example
@@ -58,26 +59,25 @@ function complement_automata(Automaton A){
 **************************************************************
 
 function Intersection_automata(Automaton LDVFA,Automaton TDVFA){
-	define new intersection INA automata 
-	if bounded variable size in LDVFA NOT equals to  bounded variable size in TDVFA 
+	define new intersection TxL automata 
+	if bounded variable size in LDVFA NOT equals to bounded variable size in TDVFA 
 		then call expand_variablesSet(LDVFA)
 	make cross algorithm between two automata
 	for each state q in TDVFA pattern automata and state p in LDVFA pattern automata do:
-		add qipi state to INA 
+		add qipi state to TxL 
 		if qi and pi is accept state 
 			then make qipi accept state 
-		make new transition in INA according to δ(qi,σ) and δ(pi,σ) 
+		make new transition in TxL according to δ(qi,σ) and δ(pi,σ) 
 	end for
-	return INA		
+	return TxL		
 }
 
 
 **************************************************************
-function check_emptiness(Automaton INA){
-	define F set of accept states of INA
-	build new set R using run BFS algorithm to collect all reachable states of INA and saving all the way to this node,
+function check_emptiness(Automaton TxL){
+	define F set of accept states of TxL
+	build new set R using run BFS algorithm to collect all reachable states of TxL and saving all the way to this node,
 	in case it was accept we will return the path as it a negative word so we send it to learner
-
 	if F∩R is empty 
 		then return true 
 	else 
@@ -86,6 +86,11 @@ function check_emptiness(Automaton INA){
 
 **************************************************************
 function expand_variablesSet(Automaton LDVFA){
-
+	do: 
+		go to lastest occurrence of the free variable y in the states linked list  
+		add new state (qnew)
+		copy all transitions from the last state to the new state δ(qnew,σ)=δ(qlast,σ)
+		add new transiton between the new state and the last state δ(qlast,xiy)=qnew
+	until LDVFA variable size equls default automata variable size
 }
 */
