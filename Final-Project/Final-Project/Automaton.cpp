@@ -24,6 +24,7 @@ Automaton::~Automaton() {//destructor
 }
 Automaton Automaton::operator ++()
 {
+	return 0;
 }
 
 Automaton Automaton::operator++(int)

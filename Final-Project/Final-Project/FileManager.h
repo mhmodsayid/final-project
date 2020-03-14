@@ -31,9 +31,3 @@ private:
 
 
 
-
-class FileManager
-{
-	int x;
-};
-
