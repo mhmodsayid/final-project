@@ -50,3 +50,14 @@ void Controller::generateResultFile(string result)
 	
 	*/
 }
+
+void Controller::set_default_Automaton(Automaton automaton)
+{
+	default_Automaton = automaton;
+}
+
+void Controller::set_FileManager(FileManager file)
+{
+	fileManager = file;
+
+}
