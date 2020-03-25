@@ -4,8 +4,8 @@
 using namespace std;
 #include"FileManager.h"
 
-#ifndef Automaton_H
-
+#ifndef FileManager_H
+#define FileManager_H
 class FileManager
 {
 public:

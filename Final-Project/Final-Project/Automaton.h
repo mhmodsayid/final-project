@@ -1,8 +1,9 @@
+#pragma once
+
 using namespace std;
-#include"FileManager.h"
 
 #ifndef Automaton_H
-
+#define Automaton_H
 
 struct node
 {
@@ -14,7 +15,7 @@ struct node
 
 }typedef Node;
 
-class Automaton : public FileManager  //only declaration //inhabitance from file manager
+class Automaton //only declaration //inhabitance from file manager
 {
 public:
 	Automaton();

@@ -1,6 +1,13 @@
 #include "Controller.h"
+#include <vector>
+#include <iostream>
+#include <fstream>
 
-Automaton Controller::buildTheAutomaton(string location)
+Controller::Controller()
+{
+}
+
+Automaton Controller::buildTheAutomaton(string location, char split_symbol)
 {
 
 
@@ -56,8 +63,88 @@ void Controller::set_default_Automaton(Automaton automaton)
 	default_Automaton = automaton;
 }
 
+void Controller::set_leanrer_Automaton(Automaton automaton)
+{
+	leanrer_Automaton = automaton;
+}
+
+Automaton Controller::get_default_Automaton()
+{
+	return default_Automaton;
+}
+
+Automaton Controller::get_leanrer_Automaton()
+{
+	return leanrer_Automaton;
+}
+
+
+int Controller::analyze_file(string Temp_argv_File_Location, char split_symbol)
+{
+	vector<string> fileLines;
+
+	string fileLine;
+	ifstream myfile;
+	bool isMembership = 0;
+
+	myfile.open(Temp_argv_File_Location);
+	//make sure file opened
+	if (!myfile) {
+		cout << "Unable to open file";
+		//exit(1); // terminate with error
+	}
+
+	//read all by line
+	while (getline(myfile, fileLine))
+	{
+		//there is no splitter it a word
+		if (fileLine.find(split_symbol) == string::npos && fileLine != "")
+			isMembership = 1;
+		else
+			//remove all the split symbols
+			fileLine.erase(std::remove(fileLine.begin(), fileLine.end(), split_symbol), fileLine.end());
+
+		// Line contains string of length > 0 then save it in vector
+		if (fileLine.size() > 0)
+			fileLines.insert(fileLines.end(), fileLine);
+	}
+	if (fileLines.size() > 1) {
+		//there is more than one word
+	}
+
+
+
+
+	if (isMembership) {
+		MemberShip membweship(default_Automaton);
+		result = membweship.execute_MemberShip(fileLines);
+
+	}
+	else {//Equivalence//may we need to send the string instead of file location
+		set_leanrer_Automaton(buildTheAutomaton(Temp_argv_File_Location, split_symbol));
+		Equevilance equevilance(default_Automaton, leanrer_Automaton);
+		result = equevilance.execute_Equevilance();
+
+	}
+
+
+
+
+	myfile.close();
+	return 0;
+}
+
 void Controller::set_FileManager(FileManager file)
 {
 	fileManager = file;
+
+}
+
+void Controller::initialze_System(string default_Automaton_File_Location,char split_symbol)
+{
+	//int method;
+	//method=file_type(Temp_argv_File_Location, split_symbol);//membership or Equivalence
+	set_default_Automaton(buildTheAutomaton(default_Automaton_File_Location, split_symbol));
+	//need to open result file and input file
 
 }

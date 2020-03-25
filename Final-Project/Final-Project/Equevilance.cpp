@@ -1,4 +1,6 @@
 ﻿#include "Equevilance.h"
+#include <iostream>
+
 /*
 function Equivalence(string path){
 	read file from path 
@@ -94,3 +96,57 @@ function expand_variablesSet(Automaton LDVFA){
 	until LDVFA variable size equls default automata variable size
 }
 */
+
+
+Equevilance::Equevilance(Automaton default_Automaton, Automaton lerner_Automaton)
+{
+	//set the automatons 
+}
+
+/*
+Equevilance::Equevilance(Automaton default_Automaton, Automaton lerner_Automaton)
+{
+}
+*/
+Equevilance::Equevilance()
+{
+	cout << "here";
+}
+
+string Equevilance::execute_Equevilance()
+{
+	return string();
+}
+
+Automaton Equevilance::extend_LAutomaton(Automaton lerner_Automaton)
+{
+	return Automaton();
+}
+
+Automaton Equevilance::crossA(Automaton default_Automaton, Automaton lerner_Automaton)
+{
+	return Automaton();
+}
+
+string Equevilance::emptiness(Automaton crossA)
+{
+	return string();
+}
+
+Automaton Equevilance::get_default_Automaton()
+{
+	return Automaton();
+}
+
+Automaton Equevilance::get_leanrer_Automaton()
+{
+	return Automaton();
+}
+
+void Equevilance::set_default_Automaton(Automaton automaton)
+{
+}
+
+void Equevilance::set_leanrer_Automaton(Automaton automaton)
+{
+}

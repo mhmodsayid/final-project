@@ -53,4 +53,43 @@ function run_w_on_A(string w){
 
 */
 
+MemberShip::MemberShip()
+{
+}
 
+MemberShip::MemberShip(Automaton default_Automaton)
+{
+}
+
+string MemberShip::execute_MemberShip(vector<string> word)
+{
+	return string();
+}
+
+string MemberShip::convert_CTP(string concrete_word)
+{
+	return string();
+}
+
+string MemberShip::run_w_on_A(Automaton default_Automaton, string pattern_word)
+{
+	return string();
+}
+
+string MemberShip::get_concrete_word(string concrete_word)
+{
+	return string();
+}
+
+string MemberShip::get_pattern_word(string pattern_word)
+{
+	return string();
+}
+
+void MemberShip::set_concrete_word(string concrete_word)
+{
+}
+
+void MemberShip::set_pattern_word(string pattern_word)
+{
+}
