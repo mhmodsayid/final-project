@@ -86,14 +86,14 @@ int Controller::analyze_file(string Temp_argv_File_Location, char split_symbol)
 	string fileLine;
 	ifstream myfile;
 	bool isMembership = 0;
-
+	/*moved to File manager setfile
 	myfile.open(Temp_argv_File_Location);
 	//make sure file opened
 	if (!myfile) {
 		cout << "Unable to open file";
 		//exit(1); // terminate with error
 	}
-
+	*/
 	//read all by line
 	while (getline(myfile, fileLine))
 	{
@@ -136,7 +136,7 @@ int Controller::analyze_file(string Temp_argv_File_Location, char split_symbol)
 
 void Controller::set_FileManager(FileManager file)
 {
-	fileManager = file;
+	//fileManager = file;
 
 }
 
