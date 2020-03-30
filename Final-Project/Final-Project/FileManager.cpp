@@ -41,7 +41,7 @@ void FileManager::setFile(string fileLocation)
 
 ifstream FileManager::getFile()
 {
-	return ifstream();
+	return getFile();
 }
 
 

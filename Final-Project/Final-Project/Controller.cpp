@@ -3,11 +3,8 @@
 #include <iostream>
 #include <fstream>
 
-Controller::Controller()
-{
-}
 
-Automaton Controller::buildTheAutomaton(string location, char split_symbol)
+Automaton Controller::buildTheAutomaton(FileManager &location, char split_symbol)
 {
 
 
@@ -81,8 +78,9 @@ Automaton Controller::get_leanrer_Automaton()
 
 int Controller::analyze_file(string Temp_argv_File_Location, char split_symbol)
 {
-	vector<string> fileLines;
+	leanrer_Automaton_file.setFile(Temp_argv_File_Location);
 
+	vector<string> fileLines;
 	string fileLine;
 	ifstream myfile;
 	bool isMembership = 0;
@@ -121,7 +119,8 @@ int Controller::analyze_file(string Temp_argv_File_Location, char split_symbol)
 
 	}
 	else {//Equivalence//may we need to send the string instead of file location
-		set_leanrer_Automaton(buildTheAutomaton(Temp_argv_File_Location, split_symbol));
+
+		set_leanrer_Automaton(buildTheAutomaton(leanrer_Automaton_file, split_symbol));
 		Equevilance equevilance(default_Automaton, leanrer_Automaton);
 		result = equevilance.execute_Equevilance();
 
@@ -142,9 +141,12 @@ void Controller::set_FileManager(FileManager file)
 
 void Controller::initialze_System(string default_Automaton_File_Location,char split_symbol)
 {
+	default_Automaton_file.setFile(default_Automaton_File_Location);
+	result_file.setFile(default_Automaton_File_Location);
+
 	//int method;
 	//method=file_type(Temp_argv_File_Location, split_symbol);//membership or Equivalence
-	set_default_Automaton(buildTheAutomaton(default_Automaton_File_Location, split_symbol));
+	set_default_Automaton(buildTheAutomaton(default_Automaton_file, split_symbol));
 	//need to open result file and input file
 
 }
