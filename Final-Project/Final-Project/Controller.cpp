@@ -7,7 +7,18 @@
 Automaton Controller::buildTheAutomaton(FileManager &file, char split_symbol)
 {
 	vector<string> data = file.ReadFile(split_symbol);
+	Automaton temp_automaton;
+	temp_automaton.setBoundVSize(stoi(data[0]));
+	temp_automaton.setAlphabetSize(stoi(data[1]));
+	vector <char> alphabet(stoi(data[1]));
 	
+	for (int i = 0; i < stoi(data[1]); i++)
+	{
+		alphabet.insert(alphabet.end(), data[i+2][0]);//read first element
+	}
+	temp_automaton.setAlphabetList(alphabet);
+
+
 	/*
 	
 	A.Varbles=array[0]
@@ -40,7 +51,7 @@ Automaton Controller::buildTheAutomaton(FileManager &file, char split_symbol)
 	*/
 
 
-	return default_Automaton;
+	return temp_automaton;
 }
 
 
