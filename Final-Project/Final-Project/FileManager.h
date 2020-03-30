@@ -13,17 +13,18 @@ class FileManager
 {
 public:
 	
-	ifstream file;
+	fstream file;
 	vector<string> fileLines;
 
 	FileManager operator ++();//++A
 	FileManager operator ++(int);//A++
 
 	FileManager operator * (FileManager In);
+
+	string fileLocation;
 	vector<string> ReadFile(char split_symbol);
 	void WriteFile(string result);
 	void setFile(string fileLocation);
-	ifstream getFile();
 
 private:
 	

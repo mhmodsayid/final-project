@@ -4,15 +4,12 @@
 #include <fstream>
 
 
-Automaton Controller::buildTheAutomaton(FileManager &location, char split_symbol)
+Automaton Controller::buildTheAutomaton(FileManager &file, char split_symbol)
 {
-
-
+	vector<string> data = file.ReadFile(split_symbol);
+	
 	/*
-	Automaton A
-	openfile(location)
-	txt=readfile()
-	array[]=split(txt,',')
+	
 	A.Varbles=array[0]
 	A.AphaSize=array[1]
 	for i=2 to A.AphaSize
@@ -43,17 +40,9 @@ Automaton Controller::buildTheAutomaton(FileManager &location, char split_symbol
 	*/
 
 
-	return Automaton();
+	return default_Automaton;
 }
 
-void Controller::generateResultFile(string result)
-{
-
-	/*
-	
-	
-	*/
-}
 
 void Controller::set_default_Automaton(Automaton automaton)
 {
@@ -64,6 +53,9 @@ void Controller::set_leanrer_Automaton(Automaton automaton)
 {
 	leanrer_Automaton = automaton;
 }
+
+
+
 
 Automaton Controller::get_default_Automaton()
 {
@@ -79,74 +71,35 @@ Automaton Controller::get_leanrer_Automaton()
 int Controller::analyze_file(string Temp_argv_File_Location, char split_symbol)
 {
 	leanrer_Automaton_file.setFile(Temp_argv_File_Location);
-
-	vector<string> fileLines;
+	vector<string> fileLines=leanrer_Automaton_file.ReadFile(split_symbol);
+	
 	string fileLine;
 	ifstream myfile;
 	bool isMembership = 0;
-	/*moved to File manager setfile
-	myfile.open(Temp_argv_File_Location);
-	//make sure file opened
-	if (!myfile) {
-		cout << "Unable to open file";
-		//exit(1); // terminate with error
-	}
-	*/
-	//read all by line
-	while (getline(myfile, fileLine))
-	{
-		//there is no splitter it a word
-		if (fileLine.find(split_symbol) == string::npos && fileLine != "")
+		if (fileLines[0].find(split_symbol) == string::npos && fileLine != "")
 			isMembership = 1;
-		else
-			//remove all the split symbols
-			fileLine.erase(std::remove(fileLine.begin(), fileLine.end(), split_symbol), fileLine.end());
-
-		// Line contains string of length > 0 then save it in vector
-		if (fileLine.size() > 0)
-			fileLines.insert(fileLines.end(), fileLine);
-	}
-	if (fileLines.size() > 1) {
-		//there is more than one word
-	}
-
-
-
-
+		
 	if (isMembership) {
 		MemberShip membweship(default_Automaton);
 		result = membweship.execute_MemberShip(fileLines);
 
 	}
-	else {//Equivalence//may we need to send the string instead of file location
-
+	else {
 		set_leanrer_Automaton(buildTheAutomaton(leanrer_Automaton_file, split_symbol));
 		Equevilance equevilance(default_Automaton, leanrer_Automaton);
 		result = equevilance.execute_Equevilance();
 
 	}
-
-
-
-
 	myfile.close();
 	return 0;
 }
 
-void Controller::set_FileManager(FileManager file)
-{
-	//fileManager = file;
 
-}
 
 void Controller::initialze_System(string default_Automaton_File_Location,char split_symbol)
 {
 	default_Automaton_file.setFile(default_Automaton_File_Location);
 	result_file.setFile(default_Automaton_File_Location);
-
-	//int method;
-	//method=file_type(Temp_argv_File_Location, split_symbol);//membership or Equivalence
 	set_default_Automaton(buildTheAutomaton(default_Automaton_file, split_symbol));
-	//need to open result file and input file
 
 }

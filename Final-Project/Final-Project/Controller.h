@@ -13,11 +13,10 @@ class Controller
 {
 public:
 	Automaton buildTheAutomaton(FileManager &location, char split_symbol);
-	void generateResultFile(string result);
+	//void generateResultFile(string result);
 	Automaton get_default_Automaton();
 	Automaton get_leanrer_Automaton();
 	int analyze_file(string Temp_argv_File_Location, char split_symbol);
-	void set_FileManager(FileManager file);
 	void initialze_System(string fileLocation, char split_symbol);
 
 private:
