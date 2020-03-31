@@ -8,13 +8,15 @@ using namespace std;
 #include<vector>
 struct node
 {
-	bool is_accept;
+	bool is_accept=false;
 	struct node* next_transition;
 	struct node* next_state;
-	char state;
-	char alphabet;//input alpha
+	struct node* last_transition;
+	int state;
+	char transition_signal;//input alpha
 
 }typedef Node;
+
 
 class Automaton //only declaration //inhabitance from file manager
 {
@@ -36,10 +38,11 @@ public:
 	vector <char> alphabetList;
 	int statesNumbe;
 	int acceptStateNum;
-	string acceptStateList;
+	vector <int> acceptStateList;
 	int transNum;
 	string transList;
 	string automataList;
+	vector <node*> pointer_array;
 
 private:
 	int y;

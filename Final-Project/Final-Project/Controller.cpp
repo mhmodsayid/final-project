@@ -6,17 +6,54 @@
 
 Automaton Controller::buildTheAutomaton(FileManager &file, char split_symbol)
 {
+	int i,TempSize,j;
 	vector<string> data = file.ReadFile(split_symbol);
 	Automaton temp_automaton;
-	temp_automaton.setBoundVSize(stoi(data[0]));
-	temp_automaton.setAlphabetSize(stoi(data[1]));
-	vector <char> alphabet(stoi(data[1]));
+	temp_automaton.setBoundVSize(stoi(data[0]));//VARIABLE SIZE
+	temp_automaton.setAlphabetSize(stoi(data[1]));//NUMBER OF CONSTANT 
+
+	TempSize = stoi(data[1]);
+	vector <char> alphabet(TempSize);
 	
-	for (int i = 0; i < stoi(data[1]); i++)
+	for ( i = 0; i < TempSize; i++)
 	{
 		alphabet.insert(alphabet.end(), data[i+2][0]);//read first element
 	}
 	temp_automaton.setAlphabetList(alphabet);
+	temp_automaton.setStatesNumbe(stoi(data[i + 2]));//States number
+	temp_automaton.setAcceptStateNum(stoi(data[i + 3]));
+	TempSize = stoi(data[i + 3]);
+	vector <int> AcstateList(TempSize);
+	for (j = i; j < TempSize+i; j++)
+	{
+		AcstateList.insert(AcstateList.end(), stoi(data[j + 3]));
+	}
+	temp_automaton.setTransNum(stoi(data[j + 3]));
+	TempSize = temp_automaton.getStatesNumbe();
+	vector <node*> pointer_array(TempSize);//size of pinter array
+
+	node* Pnode=NULL;
+	for ( j = 0; j < TempSize; j++)
+	{
+		node* node{};
+		node->state = j;
+		if (find(AcstateList.begin(), AcstateList.end(), j) != AcstateList.end())
+			node->is_accept = true;
+		if (Pnode == NULL)
+		{
+			Pnode = node;
+			Pnode->next_state = NULL;
+		}
+		else {
+			Pnode->next_state = node;
+		}
+		
+		pointer_array.at(j) = node;
+	}
+
+
+
+
 
 
 	/*
