@@ -30,11 +30,27 @@ Automaton Controller::buildTheAutomaton(FileManager &file, char split_symbol)
 	}
 	temp_automaton.setTransNum(stoi(data[j + 3]));
 	TempSize = temp_automaton.getStatesNumbe();
+	
 	vector <node*> pointer_array(TempSize);//size of pinter array
-
-	node* Pnode=NULL;
+	node *head=NULL;
+	node *tail = NULL;
 	for ( j = 0; j < TempSize; j++)
 	{
+		node* tmp = new node;
+		tmp->state = j;
+		if (find(AcstateList.begin(), AcstateList.end(), j) != AcstateList.end())
+			tmp->is_accept = true;
+		if (head == NULL)
+		{
+			head = tmp;
+			tail = tmp;
+		}
+		else {
+			tail->next_state = tmp;
+			tail = tail->next_state;
+		}
+		pointer_array.at(j) = tmp;
+		/*
 		node* node{};
 		node->state = j;
 		if (find(AcstateList.begin(), AcstateList.end(), j) != AcstateList.end())
@@ -48,7 +64,7 @@ Automaton Controller::buildTheAutomaton(FileManager &file, char split_symbol)
 			Pnode->next_state = node;
 		}
 		
-		pointer_array.at(j) = node;
+		pointer_array.at(j) = node;*/
 	}
 
 

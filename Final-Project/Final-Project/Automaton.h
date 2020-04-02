@@ -15,6 +15,15 @@ struct node
 	int state;
 	char transition_signal;//input alpha
 
+	node() //Constructor
+	{
+		next_transition = NULL;
+		next_state = NULL;
+		last_transition = NULL;
+		state = 0;
+		transition_signal = ' ';
+		is_accept = false;
+	}
 }typedef Node;
 
 
