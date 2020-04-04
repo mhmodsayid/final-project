@@ -44,8 +44,8 @@ Automaton Controller::buildTheAutomaton(FileManager &file, char split_symbol)
 	{
 		node* tmp = new node;
 		tmp->state = j;
-		vector <Trans> Constant_Trans_list(temp_automaton.getAlphabetSize());
-		vector <Trans> Variable_Trans_list(temp_automaton.getBoundVSize());
+		vector <Trans> Constant_Trans_list;
+		vector <Trans> Variable_Trans_list;
 		tmp->Constant_Trans_list = Constant_Trans_list;
 		tmp->Variable_Trans_list = Variable_Trans_list;
 
@@ -90,47 +90,8 @@ Automaton Controller::buildTheAutomaton(FileManager &file, char split_symbol)
 
 		}
 
-		
-		
-		
-		
-
-		
-
-		
 	}
 	
-	/*
-	
-	A.Varbles=array[0]
-	A.AphaSize=array[1]
-	for i=2 to A.AphaSize
-		A.alphabetSet.add[array[i]]
-	A.StateSize=array[i++]
-	A.AcceptStateSize=array[i++]
-	for i to A.AcceptStateSize
-		A.AcceptStateSet.add[array[i]]
-	A.transitions=array[i++]
-
-	for j=0 to A.transitions
-		transition t;
-		t.currentS=array[i]
-		t.tansiotionLetter=array[i++]
-		t.NextS=array[i++]
-		A.transitionsSet.add[t]
-
-	A.LinkList[A.StateSize][]
-	pointer_array[A.StateSize]
-
-	for j=0 to T=A.transitionsSet
-		if(pointer_array[T.currentS])!=null
-			node N
-			pointer_array[T.currentS]=&N
-			setlinkedlist(N.Isaccept,N.nextState,N.nextTranstions,N.State,N.alphabet)
-
-	
-	*/
-
 
 	return temp_automaton;
 }
