@@ -7,38 +7,43 @@
 Automaton Controller::buildTheAutomaton(FileManager &file, char split_symbol)
 {
 	int i,TempSize,j;
-	vector<string> data = file.ReadFile(split_symbol);
+	vector<string> dataFile = file.ReadFile(split_symbol);
+	string data = dataFile[0];
 	Automaton temp_automaton;
-	temp_automaton.setBoundVSize(stoi(data[0]));//VARIABLE SIZE
-	temp_automaton.setAlphabetSize(stoi(data[1]));//NUMBER OF CONSTANT 
+	temp_automaton.setBoundVSize(int(data[0])-'0');//VARIABLE SIZE
+	temp_automaton.setAlphabetSize(int(data[1]) - '0');//NUMBER OF CONSTANT 
 
-	TempSize = stoi(data[1]);
-	vector <char> alphabet(TempSize);
+	TempSize = temp_automaton.getAlphabetSize();
+	vector <char> alphabet(TempSize);//CONSTANTS
 	
 	for ( i = 0; i < TempSize; i++)
 	{
-		alphabet.insert(alphabet.end(), data[i+2][0]);//read first element
+		alphabet[i]=data[i+2];//read first element
 	}
 	temp_automaton.setAlphabetList(alphabet);
-	temp_automaton.setStatesNumbe(stoi(data[i + 2]));//States number
-	temp_automaton.setAcceptStateNum(stoi(data[i + 3]));
-	TempSize = stoi(data[i + 3]);
-	vector <int> AcstateList(TempSize);
+	temp_automaton.setStatesNumbe(int(data[i + 2])-'0');//States number
+	temp_automaton.setAcceptStateNum(int(data[i + 3])-'0');
+	TempSize = int(data[i + 3])-'0';
+	vector <bool> Is_stateAccept(temp_automaton.getStatesNumbe());
+
 	for (j = i; j < TempSize+i; j++)
 	{
-		AcstateList.insert(AcstateList.end(), stoi(data[j + 3]));
+		Is_stateAccept[int(data[j + 4])-'0'-1] = true;//need to know if the sates start with 0 or 1
+
 	}
-	temp_automaton.setTransNum(stoi(data[j + 3]));
+	temp_automaton.setTransNum(int(data[j + 4])-'0');
 	TempSize = temp_automaton.getStatesNumbe();
 	
 	vector <node*> pointer_array(TempSize);//size of pinter array
+	
 	node *head=NULL;
 	node *tail = NULL;
 	for ( j = 0; j < TempSize; j++)
 	{
 		node* tmp = new node;
 		tmp->state = j;
-		if (find(AcstateList.begin(), AcstateList.end(), j) != AcstateList.end())
+
+		if (Is_stateAccept[j])
 			tmp->is_accept = true;
 		if (head == NULL)
 		{
@@ -47,9 +52,9 @@ Automaton Controller::buildTheAutomaton(FileManager &file, char split_symbol)
 		}
 		else {
 			tail->next_state = tmp;
-			tail = tail->next_state;
+			tail = tmp;
 		}
-		pointer_array.at(j) = tmp;
+		pointer_array[j] = tmp;
 		/*
 		node* node{};
 		node->state = j;

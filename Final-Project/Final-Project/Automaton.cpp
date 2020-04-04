@@ -72,15 +72,7 @@ void Automaton::setAcceptStateNum(int acceptStateNum)
     this->acceptStateNum = acceptStateNum;
 }
 
-string Automaton::getAcceptStateList() const
-{
-    return acceptStateList;
-}
 
-void Automaton::setAcceptStateList(string acceptStateList)
-{
-    this->acceptStateList = acceptStateList;
-}
 
 int Automaton::getTransNum() const
 {
