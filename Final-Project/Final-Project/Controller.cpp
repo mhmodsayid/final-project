@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 
 
 Automaton Controller::buildTheAutomaton(FileManager &file, char split_symbol)
@@ -38,10 +39,15 @@ Automaton Controller::buildTheAutomaton(FileManager &file, char split_symbol)
 	
 	node *head=NULL;
 	node *tail = NULL;
+	
 	for ( j = 0; j < TempSize; j++)
 	{
 		node* tmp = new node;
 		tmp->state = j;
+		vector <Trans> Constant_Trans_list(temp_automaton.getAlphabetSize());
+		vector <Trans> Variable_Trans_list(temp_automaton.getBoundVSize());
+		tmp->Constant_Trans_list = Constant_Trans_list;
+		tmp->Variable_Trans_list = Variable_Trans_list;
 
 		if (Is_stateAccept[j])
 			tmp->is_accept = true;
@@ -55,28 +61,45 @@ Automaton Controller::buildTheAutomaton(FileManager &file, char split_symbol)
 			tail = tmp;
 		}
 		pointer_array[j] = tmp;
-		/*
-		node* node{};
-		node->state = j;
-		if (find(AcstateList.begin(), AcstateList.end(), j) != AcstateList.end())
-			node->is_accept = true;
-		if (Pnode == NULL)
-		{
-			Pnode = node;
-			Pnode->next_state = NULL;
-		}
-		else {
-			Pnode->next_state = node;
-		}
 		
-		pointer_array.at(j) = node;*/
 	}
 
 
+	temp_automaton.setPointerarray(pointer_array);
 
+	
+	int numberOfTr = temp_automaton.getTransNum();
 
+	for ( i=0; i < numberOfTr; i++)
+	{
+		int state_Index = (int(data[j + 4 + 3 * i]) - '0');
+		node* state = pointer_array[state_Index];
+		int next_State = (int(data[j + 6 + 3 * i]) - '0');
+		Trans* trans = new Trans;
+		trans->next_state = pointer_array[next_State];
+		string transition_single;
+		transition_single += data[j + 5 + 3 * i];
+		if (std::all_of(transition_single.begin(), transition_single.end(), ::isdigit))
+		{
+			trans->transition_signal = stoi(transition_single);
+			(state->Variable_Trans_list).insert(state->Variable_Trans_list.begin(),*trans);
+		}
+		else {
+			trans->transition_signal = transition_single[0];
+			state->Constant_Trans_list.push_back(*trans);//*
 
+		}
 
+		
+		
+		
+		
+
+		
+
+		
+	}
+	
 	/*
 	
 	A.Varbles=array[0]

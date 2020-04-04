@@ -84,25 +84,6 @@ void Automaton::setTransNum(int transNum)
     this->transNum = transNum;
 }
 
-string Automaton::getTransList() const
-{
-    return transList;
-}
-
-void Automaton::setTransList(string transList)
-{
-    this->transList = transList;
-}
-
-string Automaton::getAutomataList() const
-{
-    return automataList;
-}
-
-void Automaton::setAutomataList(string automataList)
-{
-    this->automataList = automataList;
-}
 
 int Automaton::getY() const
 {
@@ -115,13 +96,25 @@ void Automaton::setY(int y)
 }
 
 
+
 vector<char> Automaton::getAlphabetList() const
 {
-    return alphabetList;
+    return vector<char>();
 }
 
 void Automaton::setAlphabetList(vector<char> alphabetList)
 {
     this->alphabetList = alphabetList;
+}
+
+
+node* Automaton::getPointerarray(int index) const
+{
+    return pointer_array[index];
+}
+
+void Automaton::setPointerarray(vector<node*> pointerarray)
+{
+    pointer_array = pointerarray;
 }
 

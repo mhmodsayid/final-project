@@ -6,25 +6,38 @@ using namespace std;
 #define Automaton_H
 #include<string>
 #include<vector>
+struct Trans
+{
+	struct node* next_state;
+	char transition_signal;//input alpha
+
+	Trans() //Constructor
+	{
+		next_state = NULL;
+		transition_signal = ' ';
+	}
+}typedef Trans;
 struct node
 {
 	bool is_accept=false;
-	struct node* next_transition;
 	struct node* next_state;
-	struct node* last_transition;
 	int state;
 	char transition_signal;//input alpha
+	vector <Trans> Constant_Trans_list;
+	vector <Trans> Variable_Trans_list;
 
 	node() //Constructor
 	{
-		next_transition = NULL;
+		//next_transition = NULL;
 		next_state = NULL;
-		last_transition = NULL;
+		//last_transition = NULL;
 		state = 0;
 		transition_signal = ' ';
 		is_accept = false;
 	}
 }typedef Node;
+
+
 
 
 class Automaton //only declaration //inhabitance from file manager
@@ -41,16 +54,15 @@ public:
 
 	Automaton operator * (Automaton In);
 
-
+	vector <char> alphabetList;
 	int boundVSize;
 	int alphabetSize;
-	vector <char> alphabetList;
 	int statesNumbe;
 	int acceptStateNum;
-	vector <int> acceptStateList;
 	int transNum;
-	string transList;
-	string automataList;
+	//string transList;//
+	//string automataList;//
+	//we can add the list 
 	vector <node*> pointer_array;
 
 private:
@@ -70,24 +82,23 @@ public:
     int getAcceptStateNum() const;
     void setAcceptStateNum(int acceptStateNum);
 
-    string getAcceptStateList() const;
-    void setAcceptStateList(string acceptStateList);
-
+   
     int getTransNum() const;
     void setTransNum(int transNum);
 
-    string getTransList() const;
-    void setTransList(string transList);
-
-    string getAutomataList() const;
-    void setAutomataList(string automataList);
+   
 
     int getY() const;
     void setY(int y);
 
 public:
     vector<char> getAlphabetList() const;
-    void setAlphabetList(vector<char> alphabetList);
+
+	void setAlphabetList(vector<char> alphabetList);
+
+public:
+    node* getPointerarray(int index) const;
+    void setPointerarray(vector<node*> pointerarray);
 
 };
 
