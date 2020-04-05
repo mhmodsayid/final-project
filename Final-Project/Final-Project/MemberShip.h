@@ -3,21 +3,25 @@ using namespace std;
 #include <string>
 #include <vector>
 #include "Automaton.h"
+#include "FileManager.h"
 #ifndef MemberShip_H
 class MemberShip
 {
 public:
-	MemberShip();
+	MemberShip(FileManager &file_To_read, Automaton default_Automaton);
 	MemberShip(Automaton default_Automaton);
-	string execute_MemberShip(vector<string> word);
+	//string execute_MemberShip(vector<string> word);
+	bool execute_MemberShip();
+
+	string convert_CTP(string concrete_word, vector<char> ConstsList,int );
+	string run_w_on_A(Automaton default_Automaton, string pattern_word);
+
+	string get_concrete_word();
+	string get_pattern_word();
+
 	string concrete_word;
 	string pattern_word;
 	Automaton default_Automaton;
-	string convert_CTP(string concrete_word);
-	string run_w_on_A(Automaton default_Automaton, string pattern_word);
-
-	string get_concrete_word(string concrete_word);
-	string get_pattern_word(string pattern_word);
 
 private:
 	void set_concrete_word(string concrete_word);
