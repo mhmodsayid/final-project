@@ -25,14 +25,14 @@ MemberShip::MemberShip(FileManager& file, Automaton default_Automaton)
 	vector<string> CwordsVec=file.ReadFile('\n');
 	set_concrete_word(CwordsVec.at(0));
 	this->default_Automaton = default_Automaton;
-	this->pattern_word = convert_CTP(this->get_concrete_word,default_Automaton.alphabetList,default_Automaton.boundVSize);
+	this->pattern_word = convert_CTP(this->get_concrete_word(),default_Automaton.alphabetList,default_Automaton.boundVSize);
 }
 
 MemberShip::MemberShip(Automaton default_Automaton)
 {
 }
 
-bool MemberShip::execute_MemberShip()
+bool MemberShip::execute_MemberShip(vector<string>)
 {
 
 	return false;

@@ -51,7 +51,7 @@ public:
 
 	Automaton operator ++();//++A
 	Automaton operator ++(int);//A++
-
+	Automaton operator ~();//complement
 	Automaton operator * (Automaton In);
 
 	vector <char> alphabetList;

@@ -10,8 +10,9 @@ class MemberShip
 public:
 	MemberShip(FileManager &file_To_read, Automaton default_Automaton);
 	MemberShip(Automaton default_Automaton);
+	bool execute_MemberShip(vector<string>);
 	//string execute_MemberShip(vector<string> word);
-	bool execute_MemberShip();
+	
 
 	string convert_CTP(string concrete_word, vector<char> ConstsList,int );
 	string run_w_on_A(Automaton default_Automaton, string pattern_word);

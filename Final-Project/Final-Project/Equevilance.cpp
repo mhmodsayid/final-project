@@ -1,5 +1,6 @@
 ﻿#include "Equevilance.h"
 #include <iostream>
+#include <functional>
 
 /*
 function Equivalence(string path){
@@ -100,6 +101,8 @@ function expand_variablesSet(Automaton LDVFA){
 
 Equevilance::Equevilance(Automaton default_Automaton, Automaton lerner_Automaton)
 {
+	set_default_Automaton(default_Automaton);
+	set_leanrer_Automaton(leanrer_Automaton);
 	//set the automatons 
 }
 
@@ -115,12 +118,39 @@ Equevilance::Equevilance()
 
 string Equevilance::execute_Equevilance()
 {
+	
+	Automaton extended_Learner=extend_LAutomaton(leanrer_Automaton,default_Automaton);
+
+
 	return string();
 }
 
-Automaton Equevilance::extend_LAutomaton(Automaton lerner_Automaton)
+Automaton Equevilance::extend_LAutomaton(Automaton leanrer_Automaton, Automaton default_Automaton)
 {
-	return Automaton();
+	
+	int LearnerVsize = leanrer_Automaton.getBoundVSize();
+	int defaultVsize = default_Automaton.getBoundVSize();
+	if (LearnerVsize != defaultVsize) {//need to extend
+		Automaton extended_Learner;
+
+
+		return extended_Learner;
+	}
+	else
+	{
+		return leanrer_Automaton;
+	}
+}
+void Equevilance::complement(Automaton extended_Learner)
+{//need to convert to operator 
+	int numOfState=extended_Learner.getStatesNumbe();
+	for (int i = 0; i < numOfState; i++)
+	{
+		if (true)
+		{
+
+		}
+	}
 }
 
 Automaton Equevilance::crossA(Automaton default_Automaton, Automaton lerner_Automaton)
@@ -142,6 +172,8 @@ Automaton Equevilance::get_leanrer_Automaton()
 {
 	return Automaton();
 }
+
+
 
 void Equevilance::set_default_Automaton(Automaton automaton)
 {

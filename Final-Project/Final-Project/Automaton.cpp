@@ -25,6 +25,11 @@ Automaton Automaton::operator++(int)
 	return Automaton();
 }
 
+Automaton Automaton::operator~()
+{
+    return Automaton();
+}
+
 Automaton Automaton::operator*(Automaton In)
 {
 	return Automaton();
