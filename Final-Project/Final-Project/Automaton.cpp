@@ -118,6 +118,11 @@ node* Automaton::getPointerarray(int index) const
     return pointer_array[index];
 }
 
+vector<node*> Automaton::getPointerarray() const
+{
+    return pointer_array;
+}
+
 void Automaton::setPointerarray(vector<node*> pointerarray)
 {
     pointer_array = pointerarray;

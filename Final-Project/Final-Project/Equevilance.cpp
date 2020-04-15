@@ -1,6 +1,8 @@
 ﻿#include "Equevilance.h"
 #include <iostream>
 #include <functional>
+#include <queue>
+#include <map>
 
 /*
 function Equivalence(string path){
@@ -102,7 +104,7 @@ function expand_variablesSet(Automaton LDVFA){
 Equevilance::Equevilance(Automaton default_Automaton, Automaton lerner_Automaton)
 {
 	set_default_Automaton(default_Automaton);
-	set_leanrer_Automaton(leanrer_Automaton);
+	set_leanrer_Automaton(lerner_Automaton);
 	//set the automatons 
 }
 
@@ -120,7 +122,9 @@ string Equevilance::execute_Equevilance()
 {
 	
 	Automaton extended_Learner=extend_LAutomaton(leanrer_Automaton,default_Automaton);
-
+	complement(extended_Learner);
+	Automaton cross=crossA(default_Automaton, extended_Learner);
+	emptiness(cross);
 
 	return string();
 }
@@ -143,23 +147,77 @@ Automaton Equevilance::extend_LAutomaton(Automaton leanrer_Automaton, Automaton 
 }
 void Equevilance::complement(Automaton extended_Learner)
 {//need to convert to operator 
-	int numOfState=extended_Learner.getStatesNumbe();
-	for (int i = 0; i < numOfState; i++)
-	{
-		if (true)
-		{
-
-		}
-	}
+	
+	for (const auto& state :extended_Learner.getPointerarray())
+		state->is_accept = !state->is_accept;
 }
 
 Automaton Equevilance::crossA(Automaton default_Automaton, Automaton lerner_Automaton)
 {
-	return Automaton();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	return lerner_Automaton;
 }
 
 string Equevilance::emptiness(Automaton crossA)
-{
+{//BFS
+	vector <node*> pointer_array = crossA.getPointerarray();
+	//map<char, vector<char> > adjList;
+	queue<int> q;
+	map<char, bool> visited;
+	q.push(pointer_array[0]->state);
+
+	visited[pointer_array[0]->state] = true;
+	while (!q.empty())
+	{
+		int state = q.front();
+		//cout << state << ", ";
+		if (pointer_array[state]->is_accept)
+		{
+			cout << "No found an accept state";
+		}
+		q.pop();
+		for (Trans neighbor : pointer_array[state]->Constant_Trans_list)
+		{
+			if (!visited[neighbor.next_state->state])
+			{
+				q.push(neighbor.next_state->state);
+				visited[neighbor.next_state->state] = true;
+			}
+		}
+		for (Trans neighbor : pointer_array[state]->Variable_Trans_list)
+		{
+			if (!visited[neighbor.next_state->state])
+			{
+				q.push(neighbor.next_state->state);
+				visited[neighbor.next_state->state] = true;
+			}
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
 	return string();
 }
 
@@ -177,8 +235,10 @@ Automaton Equevilance::get_leanrer_Automaton()
 
 void Equevilance::set_default_Automaton(Automaton automaton)
 {
+	default_Automaton = automaton;
 }
 
 void Equevilance::set_leanrer_Automaton(Automaton automaton)
 {
+	leanrer_Automaton = automaton;
 }

@@ -98,6 +98,7 @@ public:
 
 public:
     node* getPointerarray(int index) const;
+	vector <node*> getPointerarray() const;
     void setPointerarray(vector<node*> pointerarray);
 
 };

@@ -29,7 +29,7 @@ Automaton Controller::buildTheAutomaton(FileManager &file, char split_symbol)
 
 	for (j = i; j < TempSize+i; j++)
 	{
-		Is_stateAccept[int(data[j + 4])-'0'-1] = true;//need to know if the sates start with 0 or 1
+		Is_stateAccept[int(data[j + 4])-'0'] = true;//need to know if the sates start with 0 or 1
 
 	}
 	temp_automaton.setTransNum(int(data[j + 4])-'0');
