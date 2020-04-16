@@ -10,7 +10,7 @@ class MemberShip
 public:
 	MemberShip(FileManager &file_To_read, Automaton default_Automaton);
 	MemberShip(Automaton default_Automaton);
-	bool execute_MemberShip(vector<string>);
+	bool execute_MemberShip();
 	//string execute_MemberShip(vector<string> word);
 	
 

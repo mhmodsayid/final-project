@@ -1,4 +1,9 @@
 #include "MemberShip.h"
+#include "Controller.h"
+#include <vector>
+#include <iostream>
+#include <fstream>
+#include <algorithm>
 
 /* pseudo code
 
@@ -22,19 +27,52 @@ function run_w_on_A(string w){
 
 MemberShip::MemberShip(FileManager& file, Automaton default_Automaton)
 {
+	bool flag = false;
 	vector<string> CwordsVec=file.ReadFile('\n');
 	set_concrete_word(CwordsVec.at(0));
 	this->default_Automaton = default_Automaton;
 	this->pattern_word = convert_CTP(this->get_concrete_word(),default_Automaton.alphabetList,default_Automaton.boundVSize);
+	flag=execute_MemberShip();
+	
 }
 
 MemberShip::MemberShip(Automaton default_Automaton)
 {
 }
 
-bool MemberShip::execute_MemberShip(vector<string>)
+bool MemberShip::execute_MemberShip()
 {
+	int current_signal_index = 0;
+	char* current_signal;
+	node* current_state = this->default_Automaton.pointer_array[0];//initial state
+	vector<char> constantsList = this->default_Automaton.alphabetList;
+	do
+	{
+		*current_signal= this->pattern_word.at(current_signal_index);
+		//check if the signal is a constant or a bound variable 
+		std::vector<char>::iterator it = std::find(constantsList.begin(), constantsList.end(), current_signal);
+		if (it != constantsList.end())//in case it is a constant use the constants trans list 
+		{
+			
+			for(int i=0;i< current_state->Constant_Trans_list.size;i++)
+				if (current_state->Constant_Trans_list[i].transition_signal == (*current_signal))
+				{
+					current_state = current_state->Constant_Trans_list[i].next_state;
+					break;
+				}
+		}
+		/*
+		else//if it is a bound variable 
+		{
+			//in case we reiceve it : just digits 
+			current_state = current_state->Variable_Trans_list[atoi(current_signal)].next_state;
 
+			//in case we recieve it : X+digit
+		}
+		*/
+	} while (this->pattern_word.at(current_signal_index)!='\0');
+	
+	
 	return false;
 }
 
@@ -73,6 +111,7 @@ string MemberShip::convert_CTP(string concrete_word, vector<char> ConstsList, in
 				}				
 			}		
 		}
+		pattern_word += '\0';
 	}
 	return pattern_word;
 }
