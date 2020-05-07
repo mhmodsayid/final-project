@@ -122,20 +122,46 @@ string Equevilance::execute_Equevilance()
 {
 	
 	Automaton extended_Learner=extend_LAutomaton(leanrer_Automaton,default_Automaton);
-	complement(extended_Learner);
+	//complement(extended_Learner);
 	Automaton cross=crossA(default_Automaton, extended_Learner);
-	emptiness(cross);
-
-	return string();
+	return emptiness(cross);
 }
 
 Automaton Equevilance::extend_LAutomaton(Automaton leanrer_Automaton, Automaton default_Automaton)
 {
 	
 	int LearnerVsize = leanrer_Automaton.getBoundVSize();
+	vector <char> alphabetList = default_Automaton.getAlphabetList();
 	int defaultVsize = default_Automaton.getBoundVSize();
 	if (LearnerVsize != defaultVsize) {//need to extend
-		Automaton extended_Learner;
+		vector <node*> states =leanrer_Automaton.getPointerarray();
+
+		for (node* state : states)//state transition 
+		{
+			//if the signal constant
+			if (find(alphabetList.begin(), alphabetList.end(), state->transition_signal) != alphabetList.end()) {
+
+			}
+
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 		return extended_Learner;
@@ -156,18 +182,6 @@ Automaton Equevilance::crossA(Automaton default_Automaton, Automaton lerner_Auto
 {
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 	return lerner_Automaton;
 }
 
@@ -176,9 +190,10 @@ string Equevilance::emptiness(Automaton crossA)
 	vector <node*> pointer_array = crossA.getPointerarray();
 	//map<char, vector<char> > adjList;
 	queue<int> q;
+	vector <vector<string>> path_ofg_node(crossA.getStatesNumbe());
 	map<char, bool> visited;
 	q.push(pointer_array[0]->state);
-
+	path_ofg_node[0].push_back("");
 	visited[pointer_array[0]->state] = true;
 	while (!q.empty())
 	{
@@ -186,13 +201,16 @@ string Equevilance::emptiness(Automaton crossA)
 		//cout << state << ", ";
 		if (pointer_array[state]->is_accept)
 		{
-			cout << "No found an accept state";
+			cout << path_ofg_node[state][0];
+			return path_ofg_node[state][0];
+			//need to  a1b4 -> ax1yy
 		}
 		q.pop();
 		for (Trans neighbor : pointer_array[state]->Constant_Trans_list)
 		{
 			if (!visited[neighbor.next_state->state])
 			{
+				path_ofg_node[neighbor.next_state->state].push_back(path_ofg_node[state][0] + neighbor.transition_signal);
 				q.push(neighbor.next_state->state);
 				visited[neighbor.next_state->state] = true;
 			}
@@ -201,6 +219,7 @@ string Equevilance::emptiness(Automaton crossA)
 		{
 			if (!visited[neighbor.next_state->state])
 			{
+				path_ofg_node[neighbor.next_state->state].push_back(path_ofg_node[state][0] + neighbor.transition_signal);
 				q.push(neighbor.next_state->state);
 				visited[neighbor.next_state->state] = true;
 			}

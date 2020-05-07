@@ -81,7 +81,7 @@ Automaton Controller::buildTheAutomaton(FileManager &file, char split_symbol)
 		transition_single += data[j + 5 + 3 * i];
 		if (std::all_of(transition_single.begin(), transition_single.end(), ::isdigit))
 		{
-			trans->transition_signal = stoi(transition_single);
+			trans->transition_signal = stoi(transition_single)+'0';
 			(state->Variable_Trans_list).insert(state->Variable_Trans_list.begin(),*trans);
 		}
 		else {
@@ -134,7 +134,7 @@ int Controller::analyze_file(string Temp_argv_File_Location, char split_symbol)
 		
 	if (isMembership) {
 		MemberShip membweship(default_Automaton);
-		result = membweship.execute_MemberShip(fileLines);
+		//result = membweship.execute_MemberShip(fileLines);
 
 	}
 	else {

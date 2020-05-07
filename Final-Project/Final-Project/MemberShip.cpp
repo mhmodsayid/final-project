@@ -48,18 +48,19 @@ bool MemberShip::execute_MemberShip()
 	vector<char> constantsList = this->default_Automaton.alphabetList;
 	do
 	{
-		*current_signal= this->pattern_word.at(current_signal_index);
+	//	*current_signal= this->pattern_word.at(current_signal_index);
 		//check if the signal is a constant or a bound variable 
-		std::vector<char>::iterator it = std::find(constantsList.begin(), constantsList.end(), current_signal);
-		if (it != constantsList.end())//in case it is a constant use the constants trans list 
+		//std::vector<char>::iterator it = std::find(constantsList.begin(), constantsList.end(), current_signal);
+		//if (it != constantsList.end())//in case it is a constant use the constants trans list 
 		{
 			
-			for(int i=0;i< current_state->Constant_Trans_list.size;i++)
+		/*	for(int i=0;i< current_state->Constant_Trans_list.size;i++)
 				if (current_state->Constant_Trans_list[i].transition_signal == (*current_signal))
 				{
 					current_state = current_state->Constant_Trans_list[i].next_state;
 					break;
 				}
+				*/
 		}
 		/*
 		else//if it is a bound variable 
