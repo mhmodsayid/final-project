@@ -121,54 +121,42 @@ Equevilance::Equevilance()
 string Equevilance::execute_Equevilance()
 {
 	
-	Automaton extended_Learner=extend_LAutomaton(leanrer_Automaton,default_Automaton);
+	extend_LAutomaton(leanrer_Automaton,default_Automaton);
 	//complement(extended_Learner);
-	Automaton cross=crossA(default_Automaton, extended_Learner);
+	Automaton cross=crossA(default_Automaton, leanrer_Automaton);
 	return emptiness(cross);
 }
 
-Automaton Equevilance::extend_LAutomaton(Automaton leanrer_Automaton, Automaton default_Automaton)
+void Equevilance::extend_LAutomaton(Automaton leanrer_Automaton, Automaton default_Automaton)
 {
 	
 	int LearnerVsize = leanrer_Automaton.getBoundVSize();
 	vector <char> alphabetList = default_Automaton.getAlphabetList();
 	int defaultVsize = default_Automaton.getBoundVSize();
-	if (LearnerVsize != defaultVsize) {//need to extend
+	if (LearnerVsize == defaultVsize) {//need to extend changed the =!to == for test
 		vector <node*> states =leanrer_Automaton.getPointerarray();
 
 		for (node* state : states)//state transition 
 		{
-			//if the signal constant
-			if (find(alphabetList.begin(), alphabetList.end(), state->transition_signal) != alphabetList.end()) {
-
+			if (state->has_free_varialbe) {//need to perform extend to this state
+				node extened_node;
+				Trans extend_trans;
+				extened_node.Constant_Trans_list = state->Constant_Trans_list;
+				extened_node.Variable_Trans_list = state->Variable_Trans_list;
+				state->Variable_Trans_list;//need to remove the Y and add X0Y
 			}
+			
+			
 
 		}
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		return extended_Learner;
+		
 	}
 	else
 	{
-		return leanrer_Automaton;
+		
 	}
 }
 void Equevilance::complement(Automaton extended_Learner)

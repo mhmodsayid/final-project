@@ -20,11 +20,13 @@ struct Trans
 struct node
 {
 	bool is_accept=false;
+	bool has_free_varialbe = false;
 	struct node* next_state;
 	int state;
 	char transition_signal;//input alpha
 	vector <Trans> Constant_Trans_list;
 	vector <Trans> Variable_Trans_list;
+
 
 	node() //Constructor
 	{

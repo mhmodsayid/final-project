@@ -81,8 +81,13 @@ Automaton Controller::buildTheAutomaton(FileManager &file, char split_symbol)
 		transition_single += data[j + 5 + 3 * i];
 		if (std::all_of(transition_single.begin(), transition_single.end(), ::isdigit))
 		{
-			trans->transition_signal = stoi(transition_single)+'0';
+			int varialbe = stoi(transition_single);
+			trans->transition_signal = varialbe +'0';
 			(state->Variable_Trans_list).insert(state->Variable_Trans_list.begin(),*trans);
+			if (varialbe >temp_automaton.getBoundVSize())//if there is Y
+			{
+				state->has_free_varialbe = true;
+			}
 		}
 		else {
 			trans->transition_signal = transition_single[0];
