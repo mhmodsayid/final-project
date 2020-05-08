@@ -7,32 +7,34 @@
 
 Automaton Controller::buildTheAutomaton(FileManager &file, char split_symbol)
 {
-	int i,TempSize,j;
+	int i=0,TempSize,j, Alphabetsize;
 	vector<string> dataFile = file.ReadFile(split_symbol);
 	string data = dataFile[0];
 	Automaton temp_automaton;
-	temp_automaton.setBoundVSize(int(data[0])-'0');//VARIABLE SIZE
-	temp_automaton.setAlphabetSize(int(data[1]) - '0');//NUMBER OF CONSTANT 
+	temp_automaton.setBoundVSize(int(data[i++])-'0');//VARIABLE SIZE
+	temp_automaton.setAlphabetSize(int(data[i++]) - '0');//NUMBER OF CONSTANT 
 
-	TempSize = temp_automaton.getAlphabetSize();
-	vector <char> alphabet(TempSize);//CONSTANTS
+	Alphabetsize = temp_automaton.getAlphabetSize();
+	vector <char> alphabet(Alphabetsize);//CONSTANTS
 	
-	for ( i = 0; i < TempSize; i++)
+	for (int k=0; k < Alphabetsize; k++)
 	{
-		alphabet[i]=data[i+2];//read first element
+		alphabet[k]=data[i++];//read first element
+		
 	}
 	temp_automaton.setAlphabetList(alphabet);
-	temp_automaton.setStatesNumbe(int(data[i + 2])-'0');//States number
-	temp_automaton.setAcceptStateNum(int(data[i + 3])-'0');
-	TempSize = int(data[i + 3])-'0';
+	temp_automaton.setStatesNumbe(int(data[i++])-'0');//States number
+	temp_automaton.setAcceptStateNum(int(data[i++])-'0');
+	TempSize = temp_automaton.getAcceptStateNum();
+
 	vector <bool> Is_stateAccept(temp_automaton.getStatesNumbe());
 
-	for (j = i; j < TempSize+i; j++)
+	for (int k=0; k < TempSize; k++)
 	{
-		Is_stateAccept[int(data[j + 4])-'0'] = true;//need to know if the sates start with 0 or 1
+		Is_stateAccept[int(data[i++])-'0'] = true;//need to know if the sates start with 0 or 1
 
 	}
-	temp_automaton.setTransNum(int(data[j + 4])-'0');
+	temp_automaton.setTransNum(int(data[i++])-'0');
 	TempSize = temp_automaton.getStatesNumbe();
 	
 	vector <node*> pointer_array(TempSize);//size of pinter array
@@ -69,16 +71,18 @@ Automaton Controller::buildTheAutomaton(FileManager &file, char split_symbol)
 
 	
 	int numberOfTr = temp_automaton.getTransNum();
-
-	for ( i=0; i < numberOfTr; i++)
+	
+	for ( int k=0; k < numberOfTr; k++)
 	{
-		int state_Index = (int(data[j + 4 + 3 * i]) - '0');
+		int state_Index = (int(data[i++]) - '0');
 		node* state = pointer_array[state_Index];
-		int next_State = (int(data[j + 6 + 3 * i]) - '0');
+		string transition_single;
+		transition_single += data[i++];
+
+		int next_State = (int(data[i++]) - '0');
 		Trans* trans = new Trans;
 		trans->next_state = pointer_array[next_State];
-		string transition_single;
-		transition_single += data[j + 5 + 3 * i];
+		
 		if (std::all_of(transition_single.begin(), transition_single.end(), ::isdigit))
 		{
 			int varialbe = stoi(transition_single);

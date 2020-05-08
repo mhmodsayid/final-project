@@ -133,7 +133,7 @@ void Equevilance::extend_LAutomaton(Automaton leanrer_Automaton, Automaton defau
 	int LearnerVsize = leanrer_Automaton.getBoundVSize();
 	vector <char> alphabetList = default_Automaton.getAlphabetList();
 	int defaultVsize = default_Automaton.getBoundVSize();
-	if (LearnerVsize == defaultVsize) {//need to extend changed the =!to == for test
+	if (LearnerVsize != defaultVsize) {//need to extend changed the =!to == for test
 		vector <node*> states =leanrer_Automaton.getPointerarray();
 
 		for (node* state : states)//state transition 
