@@ -57,7 +57,7 @@ bool MemberShip::execute_MemberShip()
 		}
 		current_signal_index++;	
 	} while (this->pattern_word[current_signal_index]!='\0');
-	
+
 	return current_state->is_accept;
 }
 

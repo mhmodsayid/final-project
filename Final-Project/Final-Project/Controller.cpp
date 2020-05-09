@@ -137,13 +137,16 @@ int Controller::analyze_file(string Temp_argv_File_Location, char split_symbol)
 	
 	string fileLine;
 	ifstream myfile;
+	bool membership_result;
 	bool isMembership = 0;
 		if (fileLines[0].find(split_symbol) == string::npos && (fileLines[0].empty()==false) )
 			isMembership = 1;
 		
 	if (isMembership) {
 		MemberShip membweship(fileLines,default_Automaton);
-		result = membweship.execute_MemberShip();
+		membership_result = membweship.execute_MemberShip();
+
+		//cout << "membership result: " << membership_result;
 
 	}
 	else {
