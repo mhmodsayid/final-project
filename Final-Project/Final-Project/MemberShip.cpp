@@ -5,35 +5,13 @@
 #include <fstream>
 #include <algorithm>
 
-/* pseudo code
 
-*******************************************
-function run_w_on_A(string w){
-	load default automaton A 
-	start from the initial state of A, q0
-	for each character ch in w do:
-		go to qi in the states linked list 
-		if there is transition with ch and qi 
-			then make transition to the next state in the transition linked list 
-		search for the next state in the states linked list 
-	end for
-	if qi is accept state 
-		then return true 
-	else 
-		return false
-}
-
-*/
-
-MemberShip::MemberShip(FileManager& file, Automaton default_Automaton)
+MemberShip::MemberShip(vector<string> CwordsVec, Automaton default_Automaton)
 {
-	bool flag = false;
-	vector<string> CwordsVec=file.ReadFile('\n');
-	set_concrete_word(CwordsVec.at(0));
+	set_concrete_word(CwordsVec[0]);
 	this->default_Automaton = default_Automaton;
 	this->pattern_word = convert_CTP(this->get_concrete_word(),default_Automaton.alphabetList,default_Automaton.boundVSize);
-	flag=execute_MemberShip();
-	
+	//flag=execute_MemberShip();	
 }
 
 MemberShip::MemberShip(Automaton default_Automaton)
@@ -42,45 +20,51 @@ MemberShip::MemberShip(Automaton default_Automaton)
 
 bool MemberShip::execute_MemberShip()
 {
+	
 	int current_signal_index = 0;
-	char* current_signal;
+	char current_signal;
 	node* current_state = this->default_Automaton.pointer_array[0];//initial state
 	vector<char> constantsList = this->default_Automaton.alphabetList;
 	do
 	{
-	//	*current_signal= this->pattern_word.at(current_signal_index);
+		current_signal= this->pattern_word[current_signal_index];
+		if(current_signal=='x')
+			current_signal = this->pattern_word[++current_signal_index];
+		if (current_signal == 'y')
+			current_signal = (default_Automaton.boundVSize + 1) + '0';
 		//check if the signal is a constant or a bound variable 
-		//std::vector<char>::iterator it = std::find(constantsList.begin(), constantsList.end(), current_signal);
-		//if (it != constantsList.end())//in case it is a constant use the constants trans list 
+		std::vector<char>::iterator it = std::find(constantsList.begin(), constantsList.end(), current_signal);
+		if (it != constantsList.end())//in case it is a constant use the constants trans list 
 		{
 			
-		/*	for(int i=0;i< current_state->Constant_Trans_list.size;i++)
-				if (current_state->Constant_Trans_list[i].transition_signal == (*current_signal))
+			for(int i=0;i< current_state->Constant_Trans_list.size();i++)
+				if (current_state->Constant_Trans_list[i].transition_signal == current_signal)
 				{
 					current_state = current_state->Constant_Trans_list[i].next_state;
 					break;
 				}
-				*/
+				
 		}
-		/*
-		else//if it is a bound variable 
+		else//if it is a bound variable or free variable
 		{
 			//in case we reiceve it : just digits 
-			current_state = current_state->Variable_Trans_list[atoi(current_signal)].next_state;
-
-			//in case we recieve it : X+digit
+			for (int i = 0; i < current_state->Variable_Trans_list.size(); i++)
+				if (current_state->Variable_Trans_list[i].transition_signal == current_signal)
+				{
+					current_state = current_state->Variable_Trans_list[i].next_state;
+					break;
+				}
 		}
-		*/
-	} while (this->pattern_word.at(current_signal_index)!='\0');
+		current_signal_index++;	
+	} while (this->pattern_word[current_signal_index]!='\0');
 	
-	
-	return false;
+	return current_state->is_accept;
 }
 
 
 string MemberShip::convert_CTP(string concrete_word, vector<char> ConstsList, int boundVSize)
 {
-	string pattern_word = "";
+	string pattern_word;
 	int j = 1,Bound_index=0;
 	vector<char> BoundVariables(boundVSize);
 
@@ -95,25 +79,26 @@ string MemberShip::convert_CTP(string concrete_word, vector<char> ConstsList, in
 			std::vector<char>::iterator it = std::find(BoundVariables.begin(), BoundVariables.end(), c);
 			if (it != BoundVariables.end()) {
 				int index = std::distance(BoundVariables.begin(), it);
-				pattern_word += "x" + index;
+				pattern_word += "x" + to_string(index+1);
 			}
 			else
 			{
 				//assign new bound variable if it is possible
-				if (Bound_index <= boundVSize)
+				if (Bound_index < boundVSize)
 				{
+					BoundVariables[Bound_index] = c;
 					Bound_index++;
-					pattern_word += "x" + Bound_index;
-					BoundVariables.at(Bound_index) = c;
+					pattern_word += "x" + to_string(Bound_index);
+					//BoundVariables[Bound_index-1] = c;
 				}
 				else
 				{
 					pattern_word += "y";
 				}				
 			}		
-		}
-		pattern_word += '\0';
+		}	
 	}
+	pattern_word += '\0';
 	return pattern_word;
 }
 
