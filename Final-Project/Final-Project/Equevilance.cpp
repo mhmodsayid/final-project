@@ -143,7 +143,11 @@ void Equevilance::extend_LAutomaton(Automaton leanrer_Automaton, Automaton defau
 				Trans extend_trans;
 				extened_node.Constant_Trans_list = state->Constant_Trans_list;
 				extened_node.Variable_Trans_list = state->Variable_Trans_list;
-				state->Variable_Trans_list;//need to remove the Y and add X0Y
+				state->Variable_Trans_list;//need to remove the Y
+				extend_trans.next_state = &extened_node;
+				extend_trans.transition_signal = '2';//not sure add X0Y
+				//increase the number of variables
+
 			}
 			
 			
