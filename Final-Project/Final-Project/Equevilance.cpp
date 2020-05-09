@@ -121,20 +121,32 @@ Equevilance::Equevilance()
 string Equevilance::execute_Equevilance()
 {
 	
-	extend_LAutomaton(leanrer_Automaton,default_Automaton);
-	//complement(extended_Learner);
+	extend_LAutomaton(&leanrer_Automaton,default_Automaton);
+	complement(default_Automaton);
 	Automaton cross=crossA(default_Automaton, leanrer_Automaton);
-	return emptiness(cross);
+	string result = emptiness(cross);
+	if (result == "") {
+
+		return result;
+	}
+	else
+	{
+		complement(default_Automaton);
+		complement(leanrer_Automaton);
+		Automaton cross = crossA(default_Automaton, leanrer_Automaton);
+		string result = emptiness(cross);
+		return result;
+	}
 }
 
-void Equevilance::extend_LAutomaton(Automaton leanrer_Automaton, Automaton default_Automaton)
+void Equevilance::extend_LAutomaton(Automaton *leanrer_Automaton, Automaton default_Automaton)
 {
 	
-	int LearnerVsize = leanrer_Automaton.getBoundVSize();
+	int LearnerVsize = leanrer_Automaton->getBoundVSize();
 	vector <char> alphabetList = default_Automaton.getAlphabetList();
 	int defaultVsize = default_Automaton.getBoundVSize();
-	if (LearnerVsize != defaultVsize) {//need to extend changed the =!to == for test
-		vector <node*> states =leanrer_Automaton.getPointerarray();
+	while (LearnerVsize != defaultVsize) {//need to extend changed the =!to == for test
+		vector <node*> states =leanrer_Automaton->getPointerarray();
 
 		for (node* state : states)//state transition 
 		{
@@ -143,25 +155,22 @@ void Equevilance::extend_LAutomaton(Automaton leanrer_Automaton, Automaton defau
 				Trans extend_trans;
 				extened_node.Constant_Trans_list = state->Constant_Trans_list;
 				extened_node.Variable_Trans_list = state->Variable_Trans_list;
-				state->Variable_Trans_list;//need to remove the Y
-				extend_trans.next_state = &extened_node;
-				extend_trans.transition_signal = '2';//not sure add X0Y
-				//increase the number of variables
-
+				extened_node.Variable_Trans_list[leanrer_Automaton->boundVSize].transition_signal++;
+				state->Variable_Trans_list[leanrer_Automaton->boundVSize].next_state = &extened_node;
+				leanrer_Automaton->boundVSize++;
+				leanrer_Automaton->statesNumbe++;
+				if (state->is_accept)
+				{
+					leanrer_Automaton->acceptStateNum++;
+					extened_node.is_accept = true;
+				}
+				leanrer_Automaton->pointer_array.push_back(&extened_node);
+				break;
 			}
-			
-			
-
 		}
-
-
-
-		
+		LearnerVsize = leanrer_Automaton->getBoundVSize();
 	}
-	else
-	{
-		
-	}
+	
 }
 void Equevilance::complement(Automaton extended_Learner)
 {//need to convert to operator 
@@ -173,7 +182,12 @@ void Equevilance::complement(Automaton extended_Learner)
 Automaton Equevilance::crossA(Automaton default_Automaton, Automaton lerner_Automaton)
 {
 
-
+	for (int i = 0; i < lerner_Automaton.statesNumbe; i++)
+	{
+		if (default_Automaton.pointer_array[i]->is_accept != lerner_Automaton.pointer_array[i]->is_accept){
+			lerner_Automaton.pointer_array[i]->is_accept = false;
+		}
+	}
 	return lerner_Automaton;
 }
 
@@ -218,18 +232,7 @@ string Equevilance::emptiness(Automaton crossA)
 		}
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-	return string();
+	return "";
 }
 
 Automaton Equevilance::get_default_Automaton()
