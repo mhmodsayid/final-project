@@ -130,13 +130,10 @@ Automaton Controller::get_leanrer_Automaton()
 }
 
 
-int Controller::analyze_file(string Temp_argv_File_Location, char split_symbol)
+string Controller::analyze_file(string Temp_argv_File_Location, char split_symbol)
 {
 	leanrer_Automaton_file.setFile(Temp_argv_File_Location);
 	vector<string> fileLines=leanrer_Automaton_file.ReadFile(split_symbol);
-	
-	string fileLine;
-	ifstream myfile;
 	bool membership_result;
 	bool isMembership = 0;
 		if (fileLines[0].find(split_symbol) != string::npos && (fileLines[0].empty()==false) )
@@ -145,18 +142,14 @@ int Controller::analyze_file(string Temp_argv_File_Location, char split_symbol)
 	if (isMembership) {
 		MemberShip membweship(fileLines,default_Automaton);
 		membership_result = membweship.execute_MemberShip();
-
-		//cout << "membership result: " << membership_result;
-
+		return membership_result + "";
 	}
 	else {
 		set_leanrer_Automaton(buildTheAutomaton(leanrer_Automaton_file, split_symbol));
 		Equevilance equevilance(default_Automaton, leanrer_Automaton);
 		result = equevilance.execute_Equevilance();
-
+		return result;
 	}
-	myfile.close();
-	return 0;
 }
 
 

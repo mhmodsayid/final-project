@@ -13,11 +13,11 @@ public:
 	Equevilance();
 	string execute_Equevilance();
 	void extend_LAutomaton(Automaton *leanrer_Automaton, Automaton default_Automaton);
-	Automaton crossA(Automaton default_Automaton, Automaton lerner_Automaton);
 	string emptiness(Automaton crossA);
 	Automaton get_default_Automaton();
 	Automaton get_leanrer_Automaton();
 	void complement(Automaton extended_Learner);
+	Automaton crossA(Automaton default_Automaton, Automaton* lerner_Automaton);
 private:
 	Automaton default_Automaton;
 	Automaton leanrer_Automaton;

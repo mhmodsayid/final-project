@@ -4,103 +4,6 @@
 #include <queue>
 #include <map>
 
-/*
-function Equivalence(string path){
-	read file from path 
-	build Automaton LDVFA 
-	load default automaton TDVFA
-	call check_equality(LDVFA,TDVFA)
-	if result is true 
-		return Yes 
-	else 
-	{
-		return counter example a
-		return NO
-	}
-}
-
-**************************************************************
-
-function check_equality(Automaton LDVFA,Automaton TDVFA){
-	check equality of two automaton by two way aggregation 
-	define flag_first_way=0
-	define flag_second_way=0
-	first way:
-	call CLDVFA=complement_automata(LDVFA)
-	call TxL=Intersection_automata(CLDVFA,TDVFA)
-	call check_emptiness(TxL)
-	if L(TxL) is empty 
-		then flag_first_way=1
-	else 
-		call BFS algorithm set counter example 
-		return counter example 
-		return false 
-
-	second way :
-	call CTDVFA=complement_automata(TDVFA)
-	call TxL=Intersection_automata(LDVFA,CTDVFA)
-	call check_emptiness(TxL)
-		if L(TxL) is empty
-		then flag_second_way=1
-	else
-		call BFS algorithm set counter example
-		return counter example
-		return false
-	if flag_first_way=1 and flag_second_way=1 
-		then return true
-}
-
-**************************************************************
-
-function complement_automata(Automaton A){
-	for each state that NOT accept state do:
-		convert state to accept 
-	end for
-	for each accept state do:
-		convert accept state to reject state 
-	end for
-}
-
-**************************************************************
-
-function Intersection_automata(Automaton LDVFA,Automaton TDVFA){
-	define new intersection TxL automata 
-	if bounded variable size in LDVFA NOT equals to bounded variable size in TDVFA 
-		then call expand_variablesSet(LDVFA)
-	make cross algorithm between two automata
-	for each state q in TDVFA pattern automata and state p in LDVFA pattern automata do:
-		add qipi state to TxL 
-		if qi and pi is accept state 
-			then make qipi accept state 
-		make new transition in TxL according to δ(qi,σ) and δ(pi,σ) 
-	end for
-	return TxL		
-}
-
-
-**************************************************************
-function check_emptiness(Automaton TxL){
-	define F set of accept states of TxL
-	build new set R using run BFS algorithm to collect all reachable states of TxL and saving all the way to this node,
-	in case it was accept we will return the path as it a negative word so we send it to learner
-	if F∩R is empty 
-		then return true 
-	else 
-		return false 
-}
-
-**************************************************************
-function expand_variablesSet(Automaton LDVFA){
-	do: 
-		go to lastest occurrence of the free variable y in the states linked list  
-		add new state (qnew)
-		copy all transitions from the last state to the new state δ(qnew,σ)=δ(qlast,σ)
-		add new transiton between the new state and the last state δ(qlast,xiy)=qnew
-	until LDVFA variable size equls default automata variable size
-}
-*/
-
-
 Equevilance::Equevilance(Automaton default_Automaton, Automaton lerner_Automaton)
 {
 	set_default_Automaton(default_Automaton);
@@ -123,18 +26,26 @@ string Equevilance::execute_Equevilance()
 	
 	extend_LAutomaton(&leanrer_Automaton,default_Automaton);
 	complement(default_Automaton);
-	Automaton cross=crossA(default_Automaton, leanrer_Automaton);
+	Automaton cross=crossA(default_Automaton, &leanrer_Automaton);
 	string result = emptiness(cross);
-	if (result == "") {
+	if (result == "") {//should be !=
 
 		return result;
 	}
 	else
 	{
+		leanrer_Automaton.restore_states();
 		complement(default_Automaton);
 		complement(leanrer_Automaton);
-		Automaton cross = crossA(default_Automaton, leanrer_Automaton);
-		string result = emptiness(cross);
+		cross = crossA(leanrer_Automaton,&default_Automaton);
+		//result = emptiness(cross);
+		for (int i = 0; i < result.size(); i++)
+		{
+			result[i] += 16;
+		}
+
+
+
 		return result;
 	}
 }
@@ -151,20 +62,22 @@ void Equevilance::extend_LAutomaton(Automaton *leanrer_Automaton, Automaton defa
 		for (node* state : states)//state transition 
 		{
 			if (state->has_free_varialbe) {//need to perform extend to this state
-				node extened_node;
+				node* extened_node= new node;
 				Trans extend_trans;
-				extened_node.Constant_Trans_list = state->Constant_Trans_list;
-				extened_node.Variable_Trans_list = state->Variable_Trans_list;
-				extened_node.Variable_Trans_list[leanrer_Automaton->boundVSize].transition_signal++;
-				state->Variable_Trans_list[leanrer_Automaton->boundVSize].next_state = &extened_node;
+				extened_node->Constant_Trans_list = state->Constant_Trans_list;
+				extened_node->Variable_Trans_list = state->Variable_Trans_list;
+				extened_node->Variable_Trans_list[leanrer_Automaton->boundVSize].transition_signal++;
+				state->Variable_Trans_list[leanrer_Automaton->boundVSize].next_state = extened_node;
+				extened_node->Variable_Trans_list[leanrer_Automaton->boundVSize].next_state = extened_node;
+
 				leanrer_Automaton->boundVSize++;
 				leanrer_Automaton->statesNumbe++;
 				if (state->is_accept)
 				{
 					leanrer_Automaton->acceptStateNum++;
-					extened_node.is_accept = true;
+					extened_node->is_accept = true;
 				}
-				leanrer_Automaton->pointer_array.push_back(&extened_node);
+				leanrer_Automaton->pointer_array.push_back(extened_node);
 				break;
 			}
 		}
@@ -179,16 +92,17 @@ void Equevilance::complement(Automaton extended_Learner)
 		state->is_accept = !state->is_accept;
 }
 
-Automaton Equevilance::crossA(Automaton default_Automaton, Automaton lerner_Automaton)
+Automaton Equevilance::crossA(Automaton default_Automaton, Automaton *lerner_Automaton)
 {
-
-	for (int i = 0; i < lerner_Automaton.statesNumbe; i++)
+	
+	for (int i = 0; i < lerner_Automaton->statesNumbe; i++)
 	{
-		if (default_Automaton.pointer_array[i]->is_accept != lerner_Automaton.pointer_array[i]->is_accept){
-			lerner_Automaton.pointer_array[i]->is_accept = false;
+		lerner_Automaton->temp_accept_states.push_back(lerner_Automaton->pointer_array[i]->is_accept);
+		if (default_Automaton.pointer_array[i]->is_accept != lerner_Automaton->pointer_array[i]->is_accept){
+			lerner_Automaton->pointer_array[i]->is_accept = false;
 		}
 	}
-	return lerner_Automaton;
+	return *lerner_Automaton;
 }
 
 string Equevilance::emptiness(Automaton crossA)
@@ -207,14 +121,14 @@ string Equevilance::emptiness(Automaton crossA)
 		//cout << state << ", ";
 		if (pointer_array[state]->is_accept)
 		{
-			cout << path_ofg_node[state][0];
+			//cout << path_ofg_node[state][0];
 			return path_ofg_node[state][0];
 			//need to  a1b4 -> ax1yy
 		}
 		q.pop();
-		for (Trans neighbor : pointer_array[state]->Constant_Trans_list)
+		for (Trans neighbor : pointer_array[state]->Constant_Trans_list )
 		{
-			if (!visited[neighbor.next_state->state])
+			if (!visited[neighbor.next_state->state] && neighbor.next_state != NULL)
 			{
 				path_ofg_node[neighbor.next_state->state].push_back(path_ofg_node[state][0] + neighbor.transition_signal);
 				q.push(neighbor.next_state->state);
@@ -223,7 +137,7 @@ string Equevilance::emptiness(Automaton crossA)
 		}
 		for (Trans neighbor : pointer_array[state]->Variable_Trans_list)
 		{
-			if (!visited[neighbor.next_state->state])
+			if (!visited[neighbor.next_state->state] && neighbor.next_state!=NULL)
 			{
 				path_ofg_node[neighbor.next_state->state].push_back(path_ofg_node[state][0] + neighbor.transition_signal);
 				q.push(neighbor.next_state->state);

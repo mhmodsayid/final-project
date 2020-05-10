@@ -30,10 +30,36 @@ Automaton Automaton::operator~()
     return Automaton();
 }
 
-Automaton Automaton::operator*(Automaton In)
+
+Automaton& Automaton::operator*(Automaton& A)
 {
-	return Automaton();
+    // TODO: insert return statement here
+    *this = A;
+    pointer_array.clear();
+    for (node* node: A.pointer_array)
+    {
+        Node* tmp = new Node;
+        tmp->Constant_Trans_list = node->Constant_Trans_list;
+        tmp->Variable_Trans_list = node->Variable_Trans_list;
+        pointer_array.push_back(tmp);
+    }
+  
+    return *this;
+    
+
+
 }
+
+void Automaton::restore_states()
+{
+    for (int i = 0; i <statesNumbe; i++)
+    {
+        pointer_array[i]->is_accept = temp_accept_states[i];
+        
+    }
+}
+
+
 
 int Automaton::getBoundVSize() const
 {

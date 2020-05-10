@@ -16,7 +16,7 @@ public:
 	//void generateResultFile(string result);
 	Automaton get_default_Automaton();
 	Automaton get_leanrer_Automaton();
-	int analyze_file(string Temp_argv_File_Location, char split_symbol);
+	string analyze_file(string Temp_argv_File_Location, char split_symbol);
 	void initialze_System(string fileLocation, char split_symbol);
 
 private:

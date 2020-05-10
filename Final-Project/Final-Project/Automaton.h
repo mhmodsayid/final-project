@@ -54,8 +54,7 @@ public:
 	Automaton operator ++();//++A
 	Automaton operator ++(int);//A++
 	Automaton operator ~();//complement
-	Automaton operator * (Automaton In);
-
+	Automaton& operator * (Automaton& A);
 	vector <char> alphabetList;
 	int boundVSize;
 	int alphabetSize;
@@ -66,10 +65,12 @@ public:
 	//string automataList;//
 	//we can add the list 
 	vector <node*> pointer_array;
-
+	vector<bool> temp_accept_states;
 private:
 	int y;
+	
 public:
+	void restore_states();
     int getBoundVSize() const;
     void setBoundVSize(int boundVSize);
 
