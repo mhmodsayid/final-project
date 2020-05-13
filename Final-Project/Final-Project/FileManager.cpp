@@ -6,7 +6,8 @@
 vector<string> FileManager::ReadFile(char split_symbol)
 {
 
-	string fileLine;
+	string fileLine="";
+	bool flag = false;//detrmine if its membership query or equevilance query
 	file.open(fileLocation);
 	//make sure file opened
 	if (!file) {
@@ -15,12 +16,16 @@ vector<string> FileManager::ReadFile(char split_symbol)
 	}
 	while (getline(file, fileLine))
 	{
-		
+		size_t found = fileLine.find(split_symbol);
+		if (found != string::npos)//equevilance query
+			flag = true;
 		fileLine.erase(std::remove(fileLine.begin(), fileLine.end(), split_symbol), fileLine.end());
 		// Line contains string of length > 0 then save it in vector
 		if (fileLine.size() > 0)
 			fileLines.insert(fileLines.end(), fileLine);
 	}
+	if (flag)
+		fileLines[0] += split_symbol;
 	file.close();
 	return fileLines;
 }

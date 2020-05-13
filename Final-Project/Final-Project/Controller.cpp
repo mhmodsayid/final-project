@@ -136,7 +136,7 @@ string Controller::analyze_file(string Temp_argv_File_Location, char split_symbo
 	vector<string> fileLines=leanrer_Automaton_file.ReadFile(split_symbol);
 	bool membership_result;
 	bool isMembership = 0;
-		if (fileLines[0].find(split_symbol) != string::npos && (fileLines[0].empty()==false) )
+		if (fileLines[0].find(split_symbol) == string::npos && (fileLines[0].empty()==false) )
 			isMembership = 1;
 		
 	if (isMembership) {
