@@ -15,7 +15,7 @@ public:
 	//string execute_MemberShip(vector<string> word);
 	
 
-	string convert_CTP(string concrete_word, vector<char> ConstsList,int );
+	string convert_CTP(string concrete_word, vector<string> ConstsList,int );
 	string run_w_on_A(Automaton default_Automaton, string pattern_word);
 
 	string get_concrete_word();

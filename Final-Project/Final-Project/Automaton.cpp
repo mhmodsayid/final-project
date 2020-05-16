@@ -128,12 +128,12 @@ void Automaton::setY(int y)
 
 
 
-vector<char> Automaton::getAlphabetList() const
+vector<string> Automaton::getAlphabetList() const
 {
-    return vector<char>();
+    return alphabetList;
 }
 
-void Automaton::setAlphabetList(vector<char> alphabetList)
+void Automaton::setAlphabetList(vector<string> alphabetList)
 {
     this->alphabetList = alphabetList;
 }

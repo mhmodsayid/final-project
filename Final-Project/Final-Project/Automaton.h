@@ -55,7 +55,7 @@ public:
 	Automaton operator ++(int);//A++
 	Automaton operator ~();//complement
 	Automaton& operator * (Automaton& A);
-	vector <char> alphabetList;
+	vector <string> alphabetList;
 	int boundVSize;
 	int alphabetSize;
 	int statesNumbe;
@@ -95,9 +95,9 @@ public:
     void setY(int y);
 
 public:
-    vector<char> getAlphabetList() const;
+    vector<string> getAlphabetList() const;
 
-	void setAlphabetList(vector<char> alphabetList);
+	void setAlphabetList(vector<string> alphabetList);
 
 public:
     node* getPointerarray(int index) const;

@@ -9,32 +9,32 @@ Automaton Controller::buildTheAutomaton(FileManager &file, char split_symbol)
 {
 	int i=0,TempSize,j, Alphabetsize;
 	vector<string> dataFile = file.ReadFile(split_symbol);
-	string data = dataFile[0];
+	//string data = dataFile[0];
 	Automaton temp_automaton;
-	temp_automaton.setBoundVSize(int(data[i++])-'0');//VARIABLE SIZE
-	temp_automaton.setAlphabetSize(int(data[i++]) - '0');//NUMBER OF CONSTANT 
+	temp_automaton.setBoundVSize(stoi(dataFile[i++]));//VARIABLE SIZE
+	temp_automaton.setAlphabetSize(stoi(dataFile[i++]));//NUMBER OF CONSTANT 
 
 	Alphabetsize = temp_automaton.getAlphabetSize();
-	vector <char> alphabet(Alphabetsize);//CONSTANTS
+	vector <string> alphabet(Alphabetsize);//CONSTANTS
 	
 	for (int k=0; k < Alphabetsize; k++)
 	{
-		alphabet[k]=data[i++];//read first element
+		alphabet[k]= dataFile[i++];//read first element
 		
 	}
 	temp_automaton.setAlphabetList(alphabet);
-	temp_automaton.setStatesNumbe(int(data[i++])-'0');//States number
-	temp_automaton.setAcceptStateNum(int(data[i++])-'0');
+	temp_automaton.setStatesNumbe(stoi(dataFile[i++]));//States number
+	temp_automaton.setAcceptStateNum(stoi(dataFile[i++]));
 	TempSize = temp_automaton.getAcceptStateNum();
 
 	vector <bool> Is_stateAccept(temp_automaton.getStatesNumbe());
 
 	for (int k=0; k < TempSize; k++)
 	{
-		Is_stateAccept[int(data[i++])-'0'] = true;//need to know if the sates start with 0 or 1
+		Is_stateAccept[stoi(dataFile[i++])] = true;//need to know if the sates start with 0 or 1
 
 	}
-	temp_automaton.setTransNum(int(data[i++])-'0');
+	temp_automaton.setTransNum(stoi(dataFile[i++]));
 	TempSize = temp_automaton.getStatesNumbe();
 	
 	vector <node*> pointer_array(TempSize);//size of pinter array
@@ -74,19 +74,19 @@ Automaton Controller::buildTheAutomaton(FileManager &file, char split_symbol)
 	
 	for ( int k=0; k < numberOfTr; k++)
 	{
-		int state_Index = (int(data[i++]) - '0');
+		int state_Index = (stoi(dataFile[i++]));
 		node* state = pointer_array[state_Index];
 		string transition_single;
-		transition_single += data[i++];
+		transition_single += dataFile[i++];
 
-		int next_State = (int(data[i++]) - '0');
+		int next_State = (stoi(dataFile[i++]));
 		Trans* trans = new Trans;
 		trans->next_state = pointer_array[next_State];
 		
 		if (std::all_of(transition_single.begin(), transition_single.end(), ::isdigit))
 		{
 			int varialbe = stoi(transition_single);
-			trans->transition_signal = varialbe +'0';
+			trans->transition_signal = transition_single[0];//need to change
 			(state->Variable_Trans_list).insert(state->Variable_Trans_list.begin(),*trans);
 			if (varialbe >temp_automaton.getBoundVSize())//if there is Y
 			{
@@ -100,8 +100,6 @@ Automaton Controller::buildTheAutomaton(FileManager &file, char split_symbol)
 		}
 
 	}
-	
-
 	return temp_automaton;
 }
 
@@ -136,7 +134,7 @@ string Controller::analyze_file(string Temp_argv_File_Location, char split_symbo
 	vector<string> fileLines=leanrer_Automaton_file.ReadFile(split_symbol);
 	bool membership_result;
 	bool isMembership = 0;
-		if (fileLines[0].find(split_symbol) == string::npos && (fileLines[0].empty()==false) )
+		if (fileLines.back().find(split_symbol) == string::npos && (fileLines.empty()==false) )
 			isMembership = 1;
 		
 	if (isMembership) {

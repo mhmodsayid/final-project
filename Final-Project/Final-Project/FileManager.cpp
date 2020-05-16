@@ -7,6 +7,7 @@ vector<string> FileManager::ReadFile(char split_symbol)
 {
 
 	string fileLine="";
+	vector<string> fileData;
 	bool flag = false;//detrmine if its membership query or equevilance query
 	file.open(fileLocation);
 	//make sure file opened
@@ -16,18 +17,34 @@ vector<string> FileManager::ReadFile(char split_symbol)
 	}
 	while (getline(file, fileLine))
 	{
-		size_t found = fileLine.find(split_symbol);
-		if (found != string::npos)//equevilance query
+		
+		//size_t found = fileLine.find(split_symbol);
+		//if (found != string::npos)//equevilance query
+			//flag = true;
+		size_t pos = 0;
+		string token;
+		//string s;
+		while ((pos = fileLine.find(split_symbol)) != string::npos) { //if we get equevilance file we preform split by symbol,else we dont
+			token = fileLine.substr(0, pos);
+			fileData.push_back(token);
+			fileLine.erase(0, pos + 1);
 			flag = true;
-		fileLine.erase(std::remove(fileLine.begin(), fileLine.end(), split_symbol), fileLine.end());
-		// Line contains string of length > 0 then save it in vector
-		if (fileLine.size() > 0)
-			fileLines.insert(fileLines.end(), fileLine);
+		}
+
+		if (flag)
+		{
+			fileData.push_back(fileLine);
+			fileData.push_back(string(1, split_symbol));//add to the end of the array symbol to know its equevilance
+		}
+			
+		else
+			fileData.push_back(fileLine);
+
+	
 	}
-	if (flag)
-		fileLines[0] += split_symbol;
+	
 	file.close();
-	return fileLines;
+	return fileData;
 }
 
 void FileManager::WriteFile(string result)

@@ -24,7 +24,7 @@ bool MemberShip::execute_MemberShip()
 	int current_signal_index = 0;
 	char current_signal;
 	node* current_state = this->default_Automaton.pointer_array[0];//initial state
-	vector<char> constantsList = this->default_Automaton.alphabetList;
+	vector<string> constantsList = this->default_Automaton.alphabetList;
 	do
 	{
 		current_signal= this->pattern_word[current_signal_index];
@@ -33,7 +33,8 @@ bool MemberShip::execute_MemberShip()
 		if (current_signal == 'y')
 			current_signal = (default_Automaton.boundVSize + 1) + '0';
 		//check if the signal is a constant or a bound variable 
-		std::vector<char>::iterator it = std::find(constantsList.begin(), constantsList.end(), current_signal);
+		//constantsList
+		std::vector<string>::iterator it = std::find(constantsList.begin(), constantsList.end(), current_signal+"");
 		if (it != constantsList.end())//in case it is a constant use the constants trans list 
 		{
 			
@@ -62,7 +63,7 @@ bool MemberShip::execute_MemberShip()
 }
 
 
-string MemberShip::convert_CTP(string concrete_word, vector<char> ConstsList, int boundVSize)
+string MemberShip::convert_CTP(string concrete_word, vector<string> ConstsList, int boundVSize)
 {
 	string pattern_word;
 	int j = 1,Bound_index=0;
@@ -71,7 +72,7 @@ string MemberShip::convert_CTP(string concrete_word, vector<char> ConstsList, in
 	for (char& c : concrete_word)
 	{
 		//check if constant 
-		std::vector<char>::iterator it = std::find(ConstsList.begin(), ConstsList.end(), c);
+		std::vector<string>::iterator it = std::find(ConstsList.begin(), ConstsList.end(), c+"");
 		if (it != ConstsList.end())
 			pattern_word += c;
 		else {
