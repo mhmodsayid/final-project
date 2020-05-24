@@ -17,8 +17,8 @@ int main(int argc, char* argv[]) {
 	char split_symbol = ',';
 
 	controller.initialze_System(default_Automaton_File_Location, split_symbol);
-	string results= controller.analyze_file(learner_File_Location, split_symbol);
-	//string results=controller.analyze_file(membership_Word_File_location, split_symbol);
+	//string results= controller.analyze_file(learner_File_Location, split_symbol);
+	string results=controller.analyze_file(membership_Word_File_location, split_symbol);
 
 	cout << results << endl;
 	return 0;

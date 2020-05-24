@@ -140,7 +140,10 @@ string Controller::analyze_file(string Temp_argv_File_Location, char split_symbo
 	if (isMembership) {
 		MemberShip membweship(fileLines,default_Automaton);
 		membership_result = membweship.execute_MemberShip();
-		return membership_result + "";
+		if (membership_result == true)
+			return "Yes! " + fileLines[0] + " belong to the default automaton!";
+		else 
+			return "No! " + fileLines[0] + " does NOT belong to the default automaton!";
 	}
 	else {
 		set_leanrer_Automaton(buildTheAutomaton(leanrer_Automaton_file, split_symbol));
