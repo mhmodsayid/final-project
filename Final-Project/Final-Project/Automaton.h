@@ -9,7 +9,7 @@ using namespace std;
 struct Trans
 {
 	struct node* next_state;
-	char transition_signal;//input alpha
+	string transition_signal;//input alpha
 
 	Trans() //Constructor
 	{
@@ -23,7 +23,7 @@ struct node
 	bool has_free_varialbe = false;
 	struct node* next_state;
 	int state;
-	char transition_signal;//input alpha
+	//char transition_signal;//input alpha
 	vector <Trans> Constant_Trans_list;
 	vector <Trans> Variable_Trans_list;
 
@@ -34,7 +34,7 @@ struct node
 		next_state = NULL;
 		//last_transition = NULL;
 		state = 0;
-		transition_signal = ' ';
+		//transition_signal = ' ';
 		is_accept = false;
 	}
 }typedef Node;
@@ -47,7 +47,7 @@ class Automaton //only declaration //inhabitance from file manager
 public:
 	Automaton();
 	Automaton(int x);
-	
+	int freeVariableShifter = 0;
 	~Automaton();
 	
 

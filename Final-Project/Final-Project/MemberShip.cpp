@@ -39,7 +39,7 @@ bool MemberShip::execute_MemberShip()
 		{
 			
 			for(int i=0;i< current_state->Constant_Trans_list.size();i++)
-				if (current_state->Constant_Trans_list[i].transition_signal == current_signal)
+				if (current_state->Constant_Trans_list[i].transition_signal == current_signal+"")
 				{
 					current_state = current_state->Constant_Trans_list[i].next_state;
 					break;
@@ -50,7 +50,7 @@ bool MemberShip::execute_MemberShip()
 		{
 			//in case we reiceve it : just digits 
 			for (int i = 0; i < current_state->Variable_Trans_list.size(); i++)
-				if (current_state->Variable_Trans_list[i].transition_signal == current_signal)
+				if (current_state->Variable_Trans_list[i].transition_signal == current_signal+"")
 				{
 					current_state = current_state->Variable_Trans_list[i].next_state;
 					break;

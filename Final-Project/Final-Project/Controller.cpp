@@ -71,19 +71,28 @@ Automaton Controller::buildTheAutomaton(FileManager &file, char split_symbol)
 
 	
 	int numberOfTr = temp_automaton.getTransNum();
-	
+	string transition_single;
+	Trans* trans = new Trans;
+	node* state;
+	int transition_Type,next_State, state_Index;
+
 	for ( int k=0; k < numberOfTr; k++)
 	{
-		int state_Index = (stoi(dataFile[i++]));
-		node* state = pointer_array[state_Index];
-		string transition_single;
-		transition_single += dataFile[i++];
-
-		int next_State = (stoi(dataFile[i++]));
-		Trans* trans = new Trans;
-		trans->next_state = pointer_array[next_State];
+		state_Index = (stoi(dataFile[i++]));
+		state = pointer_array[state_Index];
 		
-		if (std::all_of(transition_single.begin(), transition_single.end(), ::isdigit))
+		transition_Type= (stoi(dataFile[i++]));
+		transition_single = dataFile[i++];//why +=
+		
+		next_State = (stoi(dataFile[i++]));
+		trans->next_state = pointer_array[next_State];
+		//type=1 if character is constant
+		if (transition_Type==1)
+		{
+			trans->transition_signal = transition_single;
+			state->Constant_Trans_list.push_back(*trans);//*
+		}
+		else
 		{
 			int varialbe = stoi(transition_single);
 			trans->transition_signal = transition_single[0];//need to change
@@ -93,11 +102,24 @@ Automaton Controller::buildTheAutomaton(FileManager &file, char split_symbol)
 				state->has_free_varialbe = true;
 			}
 		}
-		else {
-			trans->transition_signal = transition_single[0];
-			state->Constant_Trans_list.push_back(*trans);//*
 
-		}
+
+
+			
+		
+
+
+
+
+
+
+
+		
+
+		
+		
+		
+		
 
 	}
 	return temp_automaton;

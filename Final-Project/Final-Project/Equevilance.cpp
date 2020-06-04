@@ -64,9 +64,10 @@ void Equevilance::extend_LAutomaton(Automaton *leanrer_Automaton, Automaton defa
 			if (state->has_free_varialbe) {//need to perform extend to this state
 				node* extened_node= new node;
 				Trans extend_trans;
-				extened_node->Constant_Trans_list = state->Constant_Trans_list;
-				extened_node->Variable_Trans_list = state->Variable_Trans_list;
-				extened_node->Variable_Trans_list[leanrer_Automaton->boundVSize].transition_signal++;
+				extened_node->Constant_Trans_list = state->Constant_Trans_list;//get all consent from original state
+				extened_node->Variable_Trans_list = state->Variable_Trans_list;//get all variables from original state
+				//extened_node->Variable_Trans_list[leanrer_Automaton->boundVSize].transition_signal= leanrer_Automaton->boundVSize+1;
+				leanrer_Automaton->freeVariableShifter++;//shift the Y to higher value 
 				state->Variable_Trans_list[leanrer_Automaton->boundVSize].next_state = extened_node;
 				extened_node->Variable_Trans_list[leanrer_Automaton->boundVSize].next_state = extened_node;
 
