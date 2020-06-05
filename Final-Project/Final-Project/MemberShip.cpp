@@ -21,42 +21,50 @@ MemberShip::MemberShip(Automaton default_Automaton)
 bool MemberShip::execute_MemberShip()
 {
 	
-	int current_signal_index = 0;
-	char current_signal;
+	int current_signal_index = 0,flag=0;//flag determine if its variable or constant 
+	int free_Variable_index = default_Automaton.boundVSize + 1;
+	string current_signal;
 	node* current_state = this->default_Automaton.pointer_array[0];//initial state
 	vector<string> constantsList = this->default_Automaton.alphabetList;
 	do
 	{
 		current_signal= this->pattern_word[current_signal_index];
-		if(current_signal=='x')
+		if(current_signal =="x"){
 			current_signal = this->pattern_word[++current_signal_index];
-		if (current_signal == 'y')
-			current_signal = (default_Automaton.boundVSize + 1) + '0';
+			flag = 1;
+		}
+		else if (current_signal == "y")
+		{
+			current_signal = to_string(free_Variable_index);
+			flag = 1;
+		}
+			
 		//check if the signal is a constant or a bound variable 
 		//constantsList
-		std::vector<string>::iterator it = std::find(constantsList.begin(), constantsList.end(), current_signal+"");
-		if (it != constantsList.end())//in case it is a constant use the constants trans list 
+		if(!flag)
 		{
-			
-			for(int i=0;i< current_state->Constant_Trans_list.size();i++)
-				if (current_state->Constant_Trans_list[i].transition_signal == current_signal+"")
-				{
-					current_state = current_state->Constant_Trans_list[i].next_state;
-					break;
-				}
-				
+			std::vector<string>::iterator it = std::find(constantsList.begin(), constantsList.end(), current_signal);
+			if (it != constantsList.end())//in case it is a constant use the constants trans list 
+			{
+				for(int i=0;i< current_state->Constant_Trans_list.size();i++)
+					if (current_state->Constant_Trans_list[i].transition_signal == current_signal)
+					{
+						current_state = current_state->Constant_Trans_list[i].next_state;
+						break;
+					}
+			}
 		}
 		else//if it is a bound variable or free variable
 		{
-			//in case we reiceve it : just digits 
 			for (int i = 0; i < current_state->Variable_Trans_list.size(); i++)
-				if (current_state->Variable_Trans_list[i].transition_signal == current_signal+"")
+				if (current_state->Variable_Trans_list[i].transition_signal == current_signal)
 				{
 					current_state = current_state->Variable_Trans_list[i].next_state;
 					break;
 				}
 		}
 		current_signal_index++;	
+		flag = 0;
 	} while (this->pattern_word[current_signal_index]!='\0');
 
 	return current_state->is_accept;

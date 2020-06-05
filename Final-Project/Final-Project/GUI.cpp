@@ -19,8 +19,8 @@ int main(int argc, char* argv[]) {
 	auto start_time = Clock::now();//start counting the time
 
 	controller.initialze_System(default_Automaton_File_Location, split_symbol);
-	string results= controller.analyze_file(learner_File_Location, split_symbol);
-	//string results=controller.analyze_file(membership_Word_File_location, split_symbol);
+	//string results= controller.analyze_file(learner_File_Location, split_symbol);
+	string results=controller.analyze_file(membership_Word_File_location, split_symbol);
 	auto end_time = Clock::now();
 	std::cout << "Time: " << std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - start_time).count() / 1000000000.0 << "seconds" << std::endl;
 
