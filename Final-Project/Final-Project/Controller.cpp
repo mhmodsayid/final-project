@@ -175,7 +175,11 @@ string Controller::analyze_file(string Temp_argv_File_Location, char split_symbo
 		{
 			return "Yes, the automatons are equivalence";
 		}
-		return result;
+		else
+		{
+			return "No, the automatons are not equivalence Counter example: "+result;
+		}
+		
 	}
 }
 
