@@ -181,7 +181,7 @@ string Controller::analyze_file(string Temp_argv_File_Location, char split_symbo
 void Controller::initialze_System(string default_Automaton_File_Location,char split_symbol)
 {
 	default_Automaton_file.setFile(default_Automaton_File_Location);
-	result_file.setFile(default_Automaton_File_Location);
+	//result_file.setFile(default_Automaton_File_Location);
 	set_default_Automaton(buildTheAutomaton(default_Automaton_file, split_symbol));
 
 }

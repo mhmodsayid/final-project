@@ -9,15 +9,18 @@
 class Equevilance
 {
 public:
+	Automaton cross;
+	string result;
 	Equevilance(Automaton default_Automaton, Automaton lerner_Automaton);
-	Equevilance();
 	string execute_Equevilance();
 	void extend_LAutomaton(Automaton *leanrer_Automaton, Automaton default_Automaton);
 	string emptiness(Automaton crossA);
-	Automaton get_default_Automaton();
-	Automaton get_leanrer_Automaton();
+	
 	void complement(Automaton extended_Learner);
 	Automaton crossA(Automaton default_Automaton, Automaton* lerner_Automaton);
+
+	Automaton get_default_Automaton();
+	Automaton get_leanrer_Automaton();
 private:
 	Automaton default_Automaton;
 	Automaton leanrer_Automaton;

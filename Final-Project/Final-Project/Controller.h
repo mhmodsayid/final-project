@@ -12,17 +12,15 @@ using namespace std;
 class Controller
 {
 public:
-	Automaton buildTheAutomaton(FileManager &location, char split_symbol);
-	//void generateResultFile(string result);
-	Automaton get_default_Automaton();
-	Automaton get_leanrer_Automaton();
+	Automaton buildTheAutomaton(FileManager & location, char split_symbol);
 	string analyze_file(string Temp_argv_File_Location, char split_symbol);
 	void initialze_System(string fileLocation, char split_symbol);
-
+	Automaton get_default_Automaton();
+	Automaton get_leanrer_Automaton();
 private:
 	Automaton default_Automaton;
 	Automaton leanrer_Automaton;
-	FileManager result_file;
+	//FileManager result_file;
 	FileManager default_Automaton_file;
 	FileManager leanrer_Automaton_file;
 	string result;

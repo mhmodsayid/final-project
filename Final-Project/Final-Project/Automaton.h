@@ -50,24 +50,15 @@ public:
 	int freeVariableShifter = 0;
 	~Automaton();
 	
-
-	Automaton operator ++();//++A
-	Automaton operator ++(int);//A++
-	Automaton operator ~();//complement
-	Automaton& operator * (Automaton& A);
 	vector <string> alphabetList;
 	int boundVSize;
 	int alphabetSize;
 	int statesNumbe;
 	int acceptStateNum;
 	int transNum;
-	//string transList;//
-	//string automataList;//
-	//we can add the list 
 	vector <node*> pointer_array;
 	vector<bool> temp_accept_states;
-private:
-	int y;
+
 	
 public:
 	void restore_states();
@@ -89,10 +80,6 @@ public:
     int getTransNum() const;
     void setTransNum(int transNum);
 
-   
-
-    int getY() const;
-    void setY(int y);
 
 public:
     vector<string> getAlphabetList() const;

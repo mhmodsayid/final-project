@@ -11,23 +11,14 @@ Equevilance::Equevilance(Automaton default_Automaton, Automaton lerner_Automaton
 	//set the automatons 
 }
 
-/*
-Equevilance::Equevilance(Automaton default_Automaton, Automaton lerner_Automaton)
-{
-}
-*/
-Equevilance::Equevilance()
-{
-	cout << "here";
-}
 
 string Equevilance::execute_Equevilance()
 {
 	
 	extend_LAutomaton(&leanrer_Automaton,default_Automaton);
 	complement(default_Automaton);
-	Automaton cross=crossA(default_Automaton, &leanrer_Automaton);
-	string result = emptiness(cross);
+	cross=crossA(default_Automaton, &leanrer_Automaton);
+	result = emptiness(cross);
 	if (result == "") {//should be !=
 
 		return result;
@@ -109,7 +100,6 @@ Automaton Equevilance::crossA(Automaton default_Automaton, Automaton *lerner_Aut
 string Equevilance::emptiness(Automaton crossA)
 {//BFS
 	vector <node*> pointer_array = crossA.getPointerarray();
-	//map<char, vector<char> > adjList;
 	queue<int> q;
 	vector <vector<string>> path_ofg_node(crossA.getStatesNumbe());
 	map<char, bool> visited;
@@ -119,12 +109,9 @@ string Equevilance::emptiness(Automaton crossA)
 	while (!q.empty())
 	{
 		int state = q.front();
-		//cout << state << ", ";
 		if (pointer_array[state]->is_accept)
 		{
-			//cout << path_ofg_node[state][0];
 			return path_ofg_node[state][0];
-			//need to  a1b4 -> ax1yy
 		}
 		q.pop();
 		for (Trans neighbor : pointer_array[state]->Constant_Trans_list )

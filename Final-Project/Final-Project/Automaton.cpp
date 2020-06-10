@@ -1,12 +1,12 @@
 
 #include "Automaton.h"//implantation of the header
 
-Automaton::Automaton():y(0)//default constructor
+Automaton::Automaton()//default constructor
 {
 	
 }
 
-Automaton::Automaton(int x):y(x)//overload constructor//initial y before the constructor block
+Automaton::Automaton(int x)//overload constructor//initial y before the constructor block
 {
 
 }
@@ -15,40 +15,7 @@ Automaton::Automaton(int x):y(x)//overload constructor//initial y before the con
 Automaton::~Automaton() {//destructor
 
 }
-Automaton Automaton::operator ++()
-{
-	return 0;
-}
 
-Automaton Automaton::operator++(int)
-{
-	return Automaton();
-}
-
-Automaton Automaton::operator~()
-{
-    return Automaton();
-}
-
-
-Automaton& Automaton::operator*(Automaton& A)
-{
-    // TODO: insert return statement here
-    *this = A;
-    pointer_array.clear();
-    for (node* node: A.pointer_array)
-    {
-        Node* tmp = new Node;
-        tmp->Constant_Trans_list = node->Constant_Trans_list;
-        tmp->Variable_Trans_list = node->Variable_Trans_list;
-        pointer_array.push_back(tmp);
-    }
-  
-    return *this;
-    
-
-
-}
 
 void Automaton::restore_states()
 {
@@ -113,17 +80,6 @@ int Automaton::getTransNum() const
 void Automaton::setTransNum(int transNum)
 {
     this->transNum = transNum;
-}
-
-
-int Automaton::getY() const
-{
-    return y;
-}
-
-void Automaton::setY(int y)
-{
-    this->y = y;
 }
 
 
