@@ -19,15 +19,15 @@ string Equevilance::execute_Equevilance()
 	complement(default_Automaton);
 	cross=crossA(default_Automaton, &leanrer_Automaton);
 	result = emptiness(cross);
-	if (result == "") {
-		leanrer_Automaton.restore_states();
-		complement(default_Automaton);
+	if (result == "") {//if the first aggregation didn't get Counter example try the other way
+		leanrer_Automaton.restore_states();//restore what the first attempt changes 
+		complement(default_Automaton);//return the default to the original state 2 complement cancel each other
 		complement(leanrer_Automaton);
 		cross = crossA(leanrer_Automaton, &default_Automaton);
 		result = emptiness(cross);
 	}
 	
-	for (int i = 0; i < result.size(); i++)
+	for (int i = 0; i < result.size(); i++)//Converting counter word to concrete word
 	{
 		result[i] += 16;
 	}
@@ -56,16 +56,16 @@ void Equevilance::extend_LAutomaton(Automaton *leanrer_Automaton, Automaton defa
 				leanrer_Automaton->freeVariableShifter++;//shift the Y to higher value 
 				state->Variable_Trans_list[leanrer_Automaton->boundVSize].next_state = extened_node;
 				extened_node->Variable_Trans_list[leanrer_Automaton->boundVSize].next_state = extened_node;
-				extened_node->state = leanrer_Automaton->statesNumbe;
-				leanrer_Automaton->boundVSize++;
-				leanrer_Automaton->statesNumbe++;
+				extened_node->state = leanrer_Automaton->statesNumbe;//name of the new state the next max variable 
+				leanrer_Automaton->boundVSize++;//number if variables added 1
+				leanrer_Automaton->statesNumbe++;//new state added
 
-				if (state->is_accept)
+				if (state->is_accept)//if the current state accept then the new extend state also accept 
 				{
 					leanrer_Automaton->acceptStateNum++;
 					extened_node->is_accept = true;
 				}
-				leanrer_Automaton->pointer_array.push_back(extened_node);
+				leanrer_Automaton->pointer_array.push_back(extened_node);//add the state to the automaton
 				break;
 			}
 		}
