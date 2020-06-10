@@ -19,26 +19,19 @@ string Equevilance::execute_Equevilance()
 	complement(default_Automaton);
 	cross=crossA(default_Automaton, &leanrer_Automaton);
 	result = emptiness(cross);
-	if (result == "") {//should be !=
-
-		return result;
-	}
-	else
-	{
+	if (result == "") {
 		leanrer_Automaton.restore_states();
 		complement(default_Automaton);
 		complement(leanrer_Automaton);
-		cross = crossA(leanrer_Automaton,&default_Automaton);
-		//result = emptiness(cross);
-		for (int i = 0; i < result.size(); i++)
-		{
-			result[i] += 16;
-		}
-
-
-
-		return result;
+		cross = crossA(leanrer_Automaton, &default_Automaton);
+		result = emptiness(cross);
 	}
+	
+	for (int i = 0; i < result.size(); i++)
+	{
+		result[i] += 16;
+	}
+	return result;
 }
 
 void Equevilance::extend_LAutomaton(Automaton *leanrer_Automaton, Automaton default_Automaton)
@@ -53,17 +46,20 @@ void Equevilance::extend_LAutomaton(Automaton *leanrer_Automaton, Automaton defa
 		for (node* state : states)//state transition 
 		{
 			if (state->has_free_varialbe) {//need to perform extend to this state
-				node* extened_node= new node;
+				node* extened_node= new node;//the new state to add
 				Trans extend_trans;
 				extened_node->Constant_Trans_list = state->Constant_Trans_list;//get all consent from original state
 				extened_node->Variable_Trans_list = state->Variable_Trans_list;//get all variables from original state
+				extened_node->has_free_varialbe = true;//the new node p3 has Y
+				state->has_free_varialbe = false;//p2 no longer has Y
 				//extened_node->Variable_Trans_list[leanrer_Automaton->boundVSize].transition_signal= leanrer_Automaton->boundVSize+1;
 				leanrer_Automaton->freeVariableShifter++;//shift the Y to higher value 
 				state->Variable_Trans_list[leanrer_Automaton->boundVSize].next_state = extened_node;
 				extened_node->Variable_Trans_list[leanrer_Automaton->boundVSize].next_state = extened_node;
-
+				extened_node->state = leanrer_Automaton->statesNumbe;
 				leanrer_Automaton->boundVSize++;
 				leanrer_Automaton->statesNumbe++;
+
 				if (state->is_accept)
 				{
 					leanrer_Automaton->acceptStateNum++;

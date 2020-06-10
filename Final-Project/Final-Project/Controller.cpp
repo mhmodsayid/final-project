@@ -171,6 +171,10 @@ string Controller::analyze_file(string Temp_argv_File_Location, char split_symbo
 		set_leanrer_Automaton(buildTheAutomaton(leanrer_Automaton_file, split_symbol));
 		Equevilance equevilance(default_Automaton, leanrer_Automaton);
 		result = equevilance.execute_Equevilance();
+		if (result=="")
+		{
+			return "Yes, the automatons are equivalence";
+		}
 		return result;
 	}
 }
