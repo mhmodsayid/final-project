@@ -6,26 +6,37 @@ import subprocess
 from subprocess import Popen, PIPE
 from tkinter import * 
 from tkinter.filedialog import askopenfile
+from tkinter.ttk import Style
+#from PIL import ImageTk
+
 global Control_screen
 global file_path2
 root = Tk() 
-file_path2=StringVar();
+file_path2=StringVar()
 root.geometry('500x300')
+root.resizable(False,False)
+root.title("Initialization System")
 default=""
 learner=""
-btn = Button(root, text ='Browse default automaton',width=10, height=1, command = lambda:open_file()) 
-btnRunAlg = Button(root, text ='Initialze', command = lambda:Initialze(),state=DISABLED)
-root.title("Initialization System")
 
+#img = ImageTk.PhotoImage(Image.open("logo.jpg"))
+#panel = Label(root, image = img)
+#panel.pack(side = TOP, fill = "both", expand = "yes")
 
-Label(root, text="Learning DVFA \n \t Teacher system", font = "Helvetica 16 bold italic",anchor=CENTER).pack()
-Label(root,  text="System helps the learner by answering membership queries\nand eqivalnce queries.",fg = "red",font = "Times 14",justify=LEFT).pack()
-Entry(root, textvariable=file_path2).pack()
-btn.pack(side=TOP,pady = 10) 
-btnRunAlg.pack()
+l1=Label(root, text="Learning DVFA \n \t Teacher system", font = "Cambria 16 bold italic",anchor=CENTER)
+l2=Label(root,  text="System helps the learner by answering membership queries\nand eqivalnce queries.",fg ="navy",font = "Cambria 12",justify=LEFT)
+l1.pack()
+l2.place(x=0, y=90,anchor = NW)
 
+btnBrowseD = Button(root, text ='Browse default automaton',justify=CENTER,activebackground="light blue" ,command = lambda:open_file())
+btnBrowseD.place(relx = 0.25, rely = 0.55, anchor = CENTER)
+e1=Entry(root, textvariable=file_path2,relief=tk.SUNKEN, width=40)
+e1.place(relx = 0.65, rely = 0.55, anchor = CENTER)
+btnInitialize = Button(root, text ='Initialize', command = lambda:Initialze(),state=DISABLED)
+btnInitialize.place(relx = 0.5, rely = 0.7, anchor = CENTER)
 
-
+exitButton = Button(root, text="Exit",foreground="red", background="white", command = lambda:close_window(root))
+exitButton.place(x=450, y=250)
 
 
 
@@ -35,28 +46,26 @@ def Initialze():
     file_path=StringVar();
 
     Control_screen = Toplevel(root)
-
-    Control_screen.title("Mellanox AutoAgent")
+    Control_screen.resizable(False,False)
+    Control_screen.title("DVFA queries")
     Control_screen.geometry("500x300")
-    Label(Control_screen, text="Learning DVFA \n \t Teacher system").pack()
-    btn2 = Button(Control_screen, text ='Browse learner automaton', command = lambda:open_file2()).place(x=0,y=20)
-    #btn2.pack(side = TOP, pady = 20) 
-    BtnRun = Button(Control_screen, text ='Execute Algorithm', command = lambda:RunAlg(),state=DISABLED)
-    BtnRun.pack(side = TOP, pady = 20) 
-
+    Label(Control_screen, text="Learning DVFA \n \t Teacher system",font = "Cambria 16 bold italic",anchor=CENTER).pack()
     
- 
-    username_login_entry = Entry(Control_screen, textvariable=file_path)
+    btnBrowseL = Button(Control_screen, text ='Browse learner automaton',justify=CENTER,activebackground="light blue" , command = lambda:open_file2())
+    btnBrowseL.place(relx = 0.25, rely = 0.5, anchor = CENTER)
+    Learner_path = Entry(Control_screen, textvariable=file_path,width=40)
+    Learner_path.place(relx = 0.65, rely = 0.5, anchor = CENTER)
+    
+    BtnRun = Button(Control_screen, text ='Execute Algorithm', command = lambda:RunAlg(),state=DISABLED)
+    BtnRun.place(relx = 0.5, rely = 0.7, anchor = CENTER) 
 
-    Label(Control_screen, text="RMA case number:").pack()
-    username_login_entry.pack()
+    exitButton = Button(Control_screen, text="Exit",foreground="red", background="white", command = lambda:close_window(Control_screen))
+    exitButton.place(x=450, y=250)
+ 
+    
     root.withdraw();
 
 
-
-def buttonBrowse(self):
-    self.button = ttk.Button(self.labelFrame, text = "Browse A File",command = self.fileDialog)
-    self.button.grid(column = 1, row = 1)
     
 def RunAlg():
     
@@ -64,45 +73,36 @@ def RunAlg():
     global learner
     program="Final-Project.exe"
     arguments1=default
-    argument2=learner;
+    argument2=learner
     #subprocess.call([program, arguments])
     p = Popen([program, arguments1,argument2], stdin=PIPE, stdout=PIPE, stderr=PIPE)
     output, err = p.communicate(b"input data that is passed to subprocess' stdin")
     rc = p.returncode
 
     messagebox.showinfo( "Result", output)
-
-def buttonRunAlg(self):
-    self.button = ttk.Button(self, text = "Run",command =self.RunAlg)
-    #self.button = ttk.Button(self, text = "Run",command =self.open_file)
-    self.button.place(relx=0.5, rely=0.5, anchor=S)
         
 def open_file(): 
     global default
-    file = askopenfile(mode ='r', filetypes =[('Python Files', '*.txt')]) 
+    file = askopenfile(mode ='r', filetypes =[('text Files', '*.txt')]) 
     if file is not None:  
         print(file.name)
         default=file.name 
-    btnRunAlg['state']='normal'
+    btnInitialize['state']='normal'
     file_path2.set(default)
 
 def open_file2(): 
     
     global learner
-    file = askopenfile(mode ='r', filetypes =[('Python Files', '*.txt')]) 
+    file = askopenfile(mode ='r',title = "Select A File",filetypes =[('Text Files', '*.txt')]) 
     if file is not None:  
         print(file.name)
         learner=file.name 
     file_path.set(learner)
     BtnRun['state']='normal'
 
-def fileDialog(self):
-    global Files
-    self.Files = filedialog.askopenfilename(initialdir =  "/", title = "Select A File", filetype =
-    (("Text files","*.txt"),("all files","*.*")) )
-    self.label = ttk.Label(self.labelFrame, text = "")
-    self.label.grid(column = 1, row = 2)
-    self.label.configure(text = self.filename)
+def close_window(wnd): 
+    wnd.destroy()
+    wnd.quit()
 
 mainloop() 
         
