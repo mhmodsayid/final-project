@@ -8,17 +8,28 @@
 
 MemberShip::MemberShip(vector<string> CwordsVec, Automaton default_Automaton)
 {
-	set_concrete_word(CwordsVec[0]);
 	this->default_Automaton = default_Automaton;
-	this->pattern_word = convert_CTP(this->get_concrete_word(),default_Automaton.alphabetList,default_Automaton.boundVSize);
-	//flag=execute_MemberShip();	
+	//test multy concrete words and save results in txt file 
+	for (int i = 0; i < CwordsVec.size(); i++)
+	{
+		set_multy_concrete_word(CwordsVec[i]);
+		string ptemp=convert_CTP(CwordsVec[i], default_Automaton.alphabetList, default_Automaton.boundVSize);
+		set_multy_pattern_word(ptemp);
+	}
+
+	//single concrete word and return a result 
+	//set_concrete_word(CwordsVec[0]);
+	
+	//this->pattern_word = convert_CTP(this->get_concrete_word(),default_Automaton.alphabetList,default_Automaton.boundVSize);
+	
+		
 }
 
 MemberShip::MemberShip(Automaton default_Automaton)
 {
 }
 
-bool MemberShip::execute_MemberShip()
+bool MemberShip::execute_MemberShip(string Pword)
 {
 	
 	int current_signal_index = 0,flag=0;//flag determine if its variable or constant 
@@ -28,9 +39,9 @@ bool MemberShip::execute_MemberShip()
 	vector<string> constantsList = this->default_Automaton.alphabetList;
 	do
 	{
-		current_signal= this->pattern_word[current_signal_index];
+		current_signal= Pword[current_signal_index];
 		if(current_signal =="x"){
-			current_signal = this->pattern_word[++current_signal_index];
+			current_signal = Pword[++current_signal_index];
 			flag = 1;
 		}
 		else if (current_signal == "y")
@@ -65,7 +76,7 @@ bool MemberShip::execute_MemberShip()
 		}
 		current_signal_index++;	
 		flag = 0;
-	} while (this->pattern_word[current_signal_index]!='\0');
+	} while (Pword[current_signal_index]!='\0');
 
 	return current_state->is_accept;
 }
@@ -135,4 +146,14 @@ void MemberShip::set_concrete_word(string concrete_word)
 void MemberShip::set_pattern_word(string pattern_word)
 {
 	this->pattern_word = pattern_word;
+}
+
+void MemberShip::set_multy_concrete_word(string concrete_word)
+{
+	Cwords.push_back(concrete_word);
+}
+
+void MemberShip::set_multy_pattern_word(string pattern_word)
+{
+	Pwords.push_back(pattern_word);
 }

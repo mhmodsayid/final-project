@@ -12,8 +12,9 @@ vector<string> FileManager::ReadFile(char split_symbol)
 	file.open(fileLocation);
 	//make sure file opened
 	if (!file) {
-		cout << "Unable to open file";
-		//exit(1); // terminate with error
+		//cout << "Unable to open file";
+		fileData.push_back("Error");
+		return fileData;
 	}
 	while (getline(file, fileLine))
 	{
@@ -47,16 +48,18 @@ vector<string> FileManager::ReadFile(char split_symbol)
 	return fileData;
 }
 
-void FileManager::WriteFile(string result)
+int FileManager::WriteFile(string result)
 {
 	file.open(fileLocation);
 	//make sure file opened
 	if (!file) {
 		cout << "Unable to open file";
+		return 1;
 		//exit(1); // terminate with error
 	}
 	file << result;
 	file.close();
+	return 0;
 }
 
 void FileManager::setFile(string fLocation)

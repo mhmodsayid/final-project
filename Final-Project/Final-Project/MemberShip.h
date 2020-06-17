@@ -10,8 +10,11 @@ class MemberShip
 public:
 	string concrete_word;
 	string pattern_word;
+	vector<string> Cwords;
+	vector<string> Pwords;
 	Automaton default_Automaton;
-	bool execute_MemberShip();
+
+	bool execute_MemberShip(string Pword);
 
 
 	MemberShip(vector<string> fileLines, Automaton default_Automaton);
@@ -29,6 +32,9 @@ public:
 private:
 	void set_concrete_word(string concrete_word);
 	void set_pattern_word(string pattern_word);
+	void set_multy_concrete_word(string concrete_word);
+	void set_multy_pattern_word(string pattern_word);
+
 
 
 };

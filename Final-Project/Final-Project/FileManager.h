@@ -17,7 +17,7 @@ public:
 	vector<string> fileLines;
 	string fileLocation;
 	vector<string> ReadFile(char split_symbol);
-	void WriteFile(string result);
+	int WriteFile(string result);
 	void setFile(string fileLocation);
 
 private:

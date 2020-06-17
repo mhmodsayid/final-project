@@ -5,10 +5,11 @@
 #include <algorithm>
 
 
-Automaton Controller::buildTheAutomaton(FileManager &file, char split_symbol)
+//Automaton Controller::buildTheAutomaton(FileManager &file, char split_symbol,vector<string> dataFile)
+Automaton Controller::buildTheAutomaton(vector<string> dataFile)
 {
 	int i=0,TempSize,j, Alphabetsize;
-	vector<string> dataFile = file.ReadFile(split_symbol);
+	//vector<string> dataFile = file.ReadFile(split_symbol);
 	//string data = dataFile[0];
 	Automaton temp_automaton;
 	temp_automaton.setBoundVSize(stoi(dataFile[i++]));//VARIABLE SIZE
@@ -154,21 +155,40 @@ string Controller::analyze_file(string Temp_argv_File_Location, char split_symbo
 {
 	leanrer_Automaton_file.setFile(Temp_argv_File_Location);
 	vector<string> fileLines=leanrer_Automaton_file.ReadFile(split_symbol);
-	bool membership_result;
+	if (fileLines.empty())
+		return "Error File is Empty!";
+	else if (fileLines[0] == "Error")
+		return "Error Opening File!";
+	
+	bool membership_result{};
 	bool isMembership = 0;
 		if (fileLines.back().find(split_symbol) == string::npos && (fileLines.empty()==false) )
 			isMembership = 1;
 		
 	if (isMembership) {
-		MemberShip membweship(fileLines,default_Automaton);
-		membership_result = membweship.execute_MemberShip();
-		if (membership_result == true)
-			return "Yes! " + fileLines[0] + " belong to the default automaton! ";
+		MemberShip membership(fileLines,default_Automaton);
+		MemberShip_results.setFile("m_results.txt");
+		string res="";
+		for (int i = 0; i < membership.Pwords.size(); i++)
+		{
+			string pword = membership.Pwords[i];
+			membership_result = membership.execute_MemberShip(pword);
+			
+			if (membership_result == true)
+				res+= "Yes! " + membership.Cwords[i] + " belong to the default automaton! ";
+			else
+				res+= "No! " + membership.Cwords[i] + " does NOT belong to the default automaton!";
+			res += '\n';	
+		}
+		if (MemberShip_results.WriteFile(res) == 1)
+			return "Error Opning File! Results Not Saved!!";
 		else 
-			return "No! " + fileLines[0] + " does NOT belong to the default automaton!";
+			return res+"Results Saved To File "+ MemberShip_results.fileLocation;
+		
 	}
 	else {
-		set_leanrer_Automaton(buildTheAutomaton(leanrer_Automaton_file, split_symbol));
+		//set_leanrer_Automaton(buildTheAutomaton(leanrer_Automaton_file, split_symbol));
+		set_leanrer_Automaton(buildTheAutomaton(fileLines));
 		Equevilance equevilance(default_Automaton, leanrer_Automaton);
 		result = equevilance.execute_Equevilance();
 		if (result=="")
@@ -186,10 +206,18 @@ string Controller::analyze_file(string Temp_argv_File_Location, char split_symbo
 
 //first function set the default/teacher automaton file 
 //1: file location  2:split symbol 
-void Controller::initialze_System(string default_Automaton_File_Location,char split_symbol)
+string Controller::initialze_System(string default_Automaton_File_Location,char split_symbol)
 {
 	default_Automaton_file.setFile(default_Automaton_File_Location);
-	//result_file.setFile(default_Automaton_File_Location);
-	set_default_Automaton(buildTheAutomaton(default_Automaton_file, split_symbol));
+	//FileManager file;
+	vector<string> dataFileContent = default_Automaton_file.ReadFile(split_symbol);
+	if (dataFileContent.empty())
+		return "Error File is Empty!";
+	else if (dataFileContent[0] == "Error")
+		return "Error Opening File!";
+
+	set_default_Automaton(buildTheAutomaton(dataFileContent));
+	return "";
+	//set_default_Automaton(buildTheAutomaton(default_Automaton_file, split_symbol));
 
 }
