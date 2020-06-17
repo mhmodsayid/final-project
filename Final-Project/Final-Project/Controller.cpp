@@ -195,7 +195,7 @@ string Controller::analyze_file(string Temp_argv_File_Location, char split_symbo
 		result = equevilance.execute_Equevilance();
 		if (result=="")
 		{
-			res = "Yes, the automatons are equivalence";
+			res = "Yes, the automata are equivalence";
 			
 			if (equivalence_result.WriteFile(res) == 1)
 				return "\nError Opning File! Results Not Saved!!";
@@ -204,7 +204,7 @@ string Controller::analyze_file(string Temp_argv_File_Location, char split_symbo
 		}
 		else
 		{
-			res= "No, the automatons are NOT equivalence.\nCounter example: "+result;
+			res= "No, the automata are NOT equivalence.\nCounter example: "+result;
 			if (equivalence_result.WriteFile(res) == 1)
 				return "\nError Opning File! Results Not Saved!!";
 			else

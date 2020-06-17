@@ -1,0 +1,2 @@
+No, the automatons are NOT equivalence.
+Counter example: q
