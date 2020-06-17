@@ -25,6 +25,7 @@ private:
 	FileManager default_Automaton_file;
 	FileManager leanrer_Automaton_file;
 	FileManager MemberShip_results;
+	FileManager equivalence_result;
 	string result;
 	void set_default_Automaton(Automaton automaton);
 	void set_leanrer_Automaton(Automaton automaton);

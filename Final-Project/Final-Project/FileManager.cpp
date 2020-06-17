@@ -50,7 +50,7 @@ vector<string> FileManager::ReadFile(char split_symbol)
 
 int FileManager::WriteFile(string result)
 {
-	file.open(fileLocation);
+	file.open(fileLocation, ios::out);
 	//make sure file opened
 	if (!file) {
 		cout << "Unable to open file";

@@ -159,7 +159,8 @@ string Controller::analyze_file(string Temp_argv_File_Location, char split_symbo
 		return "Error File is Empty!";
 	else if (fileLines[0] == "Error")
 		return "Error Opening File!";
-	
+
+	string res = "";
 	bool membership_result{};
 	bool isMembership = 0;
 		if (fileLines.back().find(split_symbol) == string::npos && (fileLines.empty()==false) )
@@ -168,7 +169,7 @@ string Controller::analyze_file(string Temp_argv_File_Location, char split_symbo
 	if (isMembership) {
 		MemberShip membership(fileLines,default_Automaton);
 		MemberShip_results.setFile("m_results.txt");
-		string res="";
+		
 		for (int i = 0; i < membership.Pwords.size(); i++)
 		{
 			string pword = membership.Pwords[i];
@@ -188,16 +189,26 @@ string Controller::analyze_file(string Temp_argv_File_Location, char split_symbo
 	}
 	else {
 		//set_leanrer_Automaton(buildTheAutomaton(leanrer_Automaton_file, split_symbol));
+		equivalence_result.setFile("e_results.txt");
 		set_leanrer_Automaton(buildTheAutomaton(fileLines));
 		Equevilance equevilance(default_Automaton, leanrer_Automaton);
 		result = equevilance.execute_Equevilance();
 		if (result=="")
 		{
-			return "Yes, the automatons are equivalence";
+			res = "Yes, the automatons are equivalence";
+			
+			if (equivalence_result.WriteFile(res) == 1)
+				return "\nError Opning File! Results Not Saved!!";
+			else
+				return res + "\nResults Saved To File " + equivalence_result.fileLocation;
 		}
 		else
 		{
-			return "No, the automatons are not equivalence Counter example: "+result;
+			res= "No, the automatons are NOT equivalence.\nCounter example: "+result;
+			if (equivalence_result.WriteFile(res) == 1)
+				return "\nError Opning File! Results Not Saved!!";
+			else
+				return res + "\nResults Saved To File " + equivalence_result.fileLocation;
 		}
 		
 	}

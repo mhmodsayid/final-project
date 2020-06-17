@@ -12,13 +12,13 @@ int main(int argc, char* argv[]) {
 	//should get the parameter from main of the file
 	//cout << argv[1];
 	Controller controller;
-	string default_Automaton_File_Location = argv[1];
+	//string default_Automaton_File_Location = argv[1];
 
-	string learner_File_Location = argv[2];
+	//string learner_File_Location = argv[2];
 
-	//string learner_File_Location = "LearnerFile1.txt";
+	string learner_File_Location = "LearnerFile.txt";
 	//string learner_File_Location = "MultyþþConcreteWord.txt";
-	//string default_Automaton_File_Location = "þþAutomatonFile.txt";
+	string default_Automaton_File_Location = "þþAutomatonFile.txt";
 	char split_symbol = ',';
 	auto start_time = Clock::now();//start counting the time
 	string results;
