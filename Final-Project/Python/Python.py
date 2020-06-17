@@ -61,10 +61,10 @@ def Initialze():
     Control_screen.geometry('450x250')
     Label(Control_screen, text="Learning DVFA \n \t Teacher system",font = "Cambria 16 bold italic",anchor=CENTER).pack()
     
-    btnBrowseL = Button(Control_screen, text ='Browse learner automaton',justify=CENTER,activebackground="light blue" , command = lambda:open_file2())
+    btnBrowseL = Button(Control_screen, text ='Browse input file',justify=CENTER,activebackground="light blue" , command = lambda:open_file2())
     btnBrowseL.place(relx = 0.2, rely = 0.5, anchor = CENTER)
-    Learner_path = Entry(Control_screen, textvariable=file_path,width=45)
-    Learner_path.place(relx = 0.68, rely = 0.5, anchor = CENTER)
+    Learner_path = Entry(Control_screen, textvariable=file_path,width=48)
+    Learner_path.place(relx = 0.64, rely = 0.5, anchor = CENTER)
     
     BtnRun = Button(Control_screen, text ='Execute Algorithm',foreground="green" ,command = lambda:RunAlg(),state=DISABLED)
     BtnRun.place(relx = 0.5, rely = 0.7, anchor = CENTER) 
