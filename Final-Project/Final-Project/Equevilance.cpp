@@ -29,7 +29,10 @@ string Equevilance::execute_Equevilance()
 	
 	for (int i = 0; i < result.size(); i++)//Converting counter word to concrete word
 	{
-		result[i] += 16;
+		string s(1, result[i]);
+		if (!(std::find(default_Automaton.alphabetList.begin(), default_Automaton.alphabetList.end(), s) != default_Automaton.alphabetList.end()) ){
+			result[i] += 16;
+		}
 	}
 	return result;
 }
