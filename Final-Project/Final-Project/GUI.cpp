@@ -13,10 +13,10 @@ int main(int argc, char* argv[]) {
 	//cout << argv[1];
 	Controller controller;
 	string default_Automaton_File_Location = argv[1];
-	//string learner_File_Location = argv[2];
+	string learner_File_Location = argv[2];
 
 	//string learner_File_Location = "LearnerFile.txt";
-	string learner_File_Location = "test5_notEqual_difAcceptState.txt";
+	//string learner_File_Location = "test5_notEqual_difAcceptState.txt";
 	//string learner_File_Location = "MultyþþConcreteWord.txt";
 	//string default_Automaton_File_Location = "‏‏Default.txt";
 	char split_symbol = ',';
