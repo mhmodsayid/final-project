@@ -39,11 +39,13 @@ MemberShip::MemberShip(Automaton default_Automaton)
 bool MemberShip::execute_MemberShip(string Pword)
 {
 	
-	int current_signal_index = 0,flag=0;//flag determine if its variable or constant 
+	int current_signal_index = 0,flag=0;//flag determine if its 1-variable or 0-constant 
 	int free_Variable_index = default_Automaton.boundVSize + 1;
 	string current_signal;
-	node* current_state = this->default_Automaton.pointer_array[0];//initial state
+	vector <node*> pointer_array = default_Automaton.getPointerarray();
+	node* current_state = pointer_array[0];//initial state
 	vector<string> constantsList = this->default_Automaton.alphabetList;
+	
 	do
 	{
 		current_signal= Pword[current_signal_index];
@@ -61,6 +63,14 @@ bool MemberShip::execute_MemberShip(string Pword)
 		//constantsList
 		if(!flag)
 		{
+			for (int i = 0; i < current_state->Constant_Trans_list.size(); i++)//T transitions 
+				if (current_state->Constant_Trans_list[i].transition_signal == current_signal)
+				{
+					current_state = current_state->Constant_Trans_list[i].next_state;
+					break;
+				}
+
+			/*
 			std::vector<string>::iterator it = std::find(constantsList.begin(), constantsList.end(), current_signal);
 			if (it != constantsList.end())//in case it is a constant use the constants trans list 
 			{
@@ -70,7 +80,7 @@ bool MemberShip::execute_MemberShip(string Pword)
 						current_state = current_state->Constant_Trans_list[i].next_state;
 						break;
 					}
-			}
+			}*/
 		}
 		else//if it is a bound variable or free variable
 		{
@@ -82,6 +92,7 @@ bool MemberShip::execute_MemberShip(string Pword)
 				}
 		}
 		current_signal_index++;	
+		
 		flag = 0;
 	} while (Pword[current_signal_index]!='\0');
 

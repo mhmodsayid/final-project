@@ -46,7 +46,7 @@ Automaton Controller::buildTheAutomaton(vector<string> dataFile)
 	temp_automaton.setTransNum(stoi(dataFile[i++]));
 	TempSize = temp_automaton.getStatesNumbe();
 	
-	vector <node*> pointer_array(TempSize);//size of pinter array
+	vector <node*> pointer_array(TempSize);//size of pointer array
 	
 	node *head=NULL;
 	node *tail = NULL;

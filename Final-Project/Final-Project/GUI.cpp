@@ -15,9 +15,9 @@ int main(int argc, char* argv[]) {
 	//string default_Automaton_File_Location = argv[1];
 	//string learner_File_Location = argv[2];
 
-	string learner_File_Location = "LearnerFile.txt";
+	//string learner_File_Location = "LearnerFile.txt";
 	//string learner_File_Location = "test5_notEqual_difAcceptState.txt";
-	//string learner_File_Location = "MultyþþConcreteWord.txt";
+	string learner_File_Location = "Multy‏‏ConcreteWord.txt";
 	string default_Automaton_File_Location = "AutomatonFile.txt";
 	char split_symbol = ',';
 	auto start_time = Clock::now();//start counting the time
