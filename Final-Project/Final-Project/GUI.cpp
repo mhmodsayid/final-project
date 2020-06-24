@@ -1,4 +1,4 @@
-
+ï»¿
 #include <string>
 #include <algorithm>
 #include "FileManager.h"
@@ -16,8 +16,9 @@ int main(int argc, char* argv[]) {
 	string learner_File_Location = argv[2];
 
 	//string learner_File_Location = "LearnerFile.txt";
-	//string learner_File_Location = "MultyşşConcreteWord.txt";
-	//string default_Automaton_File_Location = "şşAutomatonFile.txt";
+	//string learner_File_Location = "test5_notEqual_difAcceptState.txt";
+	//string learner_File_Location = "MultyÃ¾Ã¾ConcreteWord.txt";
+	//string default_Automaton_File_Location = "â€â€Default.txt";
 	char split_symbol = ',';
 	auto start_time = Clock::now();//start counting the time
 	string results;

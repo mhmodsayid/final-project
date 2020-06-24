@@ -1,17 +1,9 @@
-from tkinter import ttk
+
 import tkinter as tk 
 from tkinter import filedialog
 from tkinter import messagebox
-import subprocess
 from subprocess import Popen, PIPE
 from tkinter import * 
-from tkinter.filedialog import askopenfile
-from tkinter.ttk import Style
-import os
-import urllib.request
-import requests
-import shutil
-
 
 
 global Control_screen
@@ -24,14 +16,6 @@ root.title("Initialization System")
 default=""
 learner=""
 
-#urllib.request.urlretrieve(image_url, "logo.jpg")
-#url = 'https://braude.ac.il/wp-content/uploads/2019/06/braude-logo-small-1.jpg'
-#r = requests.get(url,verify=False)
-#urllib.request.urlretrieve("https://braude.ac.il/wp-content/uploads/2019/06/braude-logo-small-1.jpg", "braude-logo-small-1.jpg")
-#widget = Label(root, compound='top')
-#widget.lenna_image_png =PhotoImage(file=local_file)
-#widget['image'] = widget.lenna_image_png
-#widget.pack()
 
 l1=Label(root, text="Learning DVFA \n \t Teacher system", font = "Cambria 16 bold italic",anchor=CENTER)
 l2=Label(root,  text="System helps the learner by answering membership queries\nand eqivalnce queries.",fg ="navy",font = "Cambria 12",justify=LEFT)
@@ -93,7 +77,7 @@ def RunAlg():
         
 def open_file(): 
     global default
-    file = askopenfile(mode ='r', filetypes =[('text Files', '*.txt')]) 
+    file = tk.filedialog.askopenfile(mode ='r', filetypes =[('text Files', '*.txt')]) 
     if file is not None:  
         print(file.name)
         default=file.name 
@@ -103,7 +87,7 @@ def open_file():
 def open_file2(): 
     
     global learner
-    file = askopenfile(mode ='r',title = "Select A File",filetypes =[('Text Files', '*.txt')]) 
+    file = tk.filedialog.askopenfile(mode ='r',title = "Select A File",filetypes =[('Text Files', '*.txt')]) 
     if file is not None:  
         print(file.name)
         learner=file.name 

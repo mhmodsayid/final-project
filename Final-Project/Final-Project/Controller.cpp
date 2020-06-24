@@ -156,9 +156,9 @@ string Controller::analyze_file(string Temp_argv_File_Location, char split_symbo
 	leanrer_Automaton_file.setFile(Temp_argv_File_Location);
 	vector<string> fileLines=leanrer_Automaton_file.ReadFile(split_symbol);
 	if (fileLines.empty())
-		return "Error File is Empty!";
+		return "Error Input File is Empty!";
 	else if (fileLines[0] == "Error")
-		return "Error Opening File!";
+		return "Error Input Opening File!";
 
 	string res = "";
 	bool membership_result{};
@@ -195,18 +195,18 @@ string Controller::analyze_file(string Temp_argv_File_Location, char split_symbo
 		result = equevilance.execute_Equevilance();
 		if (result=="")
 		{
-			res = "Yes, the automata are equivalence";
+			res = "Yes, the Automata are equivalent";
 			
 			if (equivalence_result.WriteFile(res) == 1)
-				return "\nError Opning File! Results Not Saved!!";
+				return "\nError Opening File! Results Not Saved!!";
 			else
 				return res + "\nResults Saved To File " + equivalence_result.fileLocation;
 		}
 		else
 		{
-			res= "No, the automata are NOT equivalence.\nCounter example: "+result;
+			res= "No, the Automata are NOT equivalent.\nCounter example: "+result;
 			if (equivalence_result.WriteFile(res) == 1)
-				return "\nError Opning File! Results Not Saved!!";
+				return "\nError Opening File! Results Not Saved!!";
 			else
 				return res + "\nResults Saved To File " + equivalence_result.fileLocation;
 		}
@@ -223,9 +223,9 @@ string Controller::initialze_System(string default_Automaton_File_Location,char 
 	//FileManager file;
 	vector<string> dataFileContent = default_Automaton_file.ReadFile(split_symbol);
 	if (dataFileContent.empty())
-		return "Error File is Empty!";
+		return "Error Default Automaton File is Empty!";
 	else if (dataFileContent[0] == "Error")
-		return "Error Opening File!";
+		return "Error Opening Default Automaton File!";
 
 	set_default_Automaton(buildTheAutomaton(dataFileContent));
 	return "";
