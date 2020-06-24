@@ -5,6 +5,13 @@
 #include <fstream>
 #include <algorithm>
 
+//sizes 
+//K constants 
+//N bound variables 
+//L len of the word 
+//T transitions 
+//running time O(L*K*T) 
+//memory comp O(L+N+K+T)
 
 MemberShip::MemberShip(vector<string> CwordsVec, Automaton default_Automaton)
 {
@@ -57,7 +64,7 @@ bool MemberShip::execute_MemberShip(string Pword)
 			std::vector<string>::iterator it = std::find(constantsList.begin(), constantsList.end(), current_signal);
 			if (it != constantsList.end())//in case it is a constant use the constants trans list 
 			{
-				for(int i=0;i< current_state->Constant_Trans_list.size();i++)
+				for(int i=0;i< current_state->Constant_Trans_list.size();i++)//T transitions 
 					if (current_state->Constant_Trans_list[i].transition_signal == current_signal)
 					{
 						current_state = current_state->Constant_Trans_list[i].next_state;
@@ -88,14 +95,14 @@ string MemberShip::convert_CTP(string concrete_word, vector<string> ConstsList, 
 	int j = 1,Bound_index=0;
 	vector<char> BoundVariables(boundVSize);
 
-	for (char& c : concrete_word)
+	for (char& c : concrete_word) // L len of the word--> O(L*k),O(L*n)
 	{
-		//check if constant 
+		//check if constant k constants 
 		std::vector<string>::iterator it = std::find(ConstsList.begin(), ConstsList.end(), c+"");
 		if (it != ConstsList.end())
 			pattern_word += c;
 		else {
-			//check if its assigned to a bound variable 
+			//check if its assigned to a bound variable n bound variables 
 			std::vector<char>::iterator it = std::find(BoundVariables.begin(), BoundVariables.end(), c);
 			if (it != BoundVariables.end()) {
 				int index = std::distance(BoundVariables.begin(), it);

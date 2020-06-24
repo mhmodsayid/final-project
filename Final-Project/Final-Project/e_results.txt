@@ -1,2 +1,2 @@
-No, the automata are NOT equivalence.
+No, the Automata are NOT equivalent.
 Counter example: Aa

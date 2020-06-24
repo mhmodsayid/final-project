@@ -4,6 +4,14 @@
 #include <fstream>
 #include <algorithm>
 
+//sizes
+//K constants 
+//N bound variables 
+//L len of the word 
+//T transitions 
+//S number of states 
+//running time O(2S+T+K)
+//memory comp  O(T+2S+K)
 
 //Automaton Controller::buildTheAutomaton(FileManager &file, char split_symbol,vector<string> dataFile)
 Automaton Controller::buildTheAutomaton(vector<string> dataFile)
@@ -16,7 +24,7 @@ Automaton Controller::buildTheAutomaton(vector<string> dataFile)
 	temp_automaton.setAlphabetSize(stoi(dataFile[i++]));//NUMBER OF CONSTANT 
 
 	Alphabetsize = temp_automaton.getAlphabetSize();
-	vector <string> alphabet(Alphabetsize);//CONSTANTS
+	vector <string> alphabet(Alphabetsize);//K
 	
 	for (int k=0; k < Alphabetsize; k++)
 	{
@@ -28,9 +36,9 @@ Automaton Controller::buildTheAutomaton(vector<string> dataFile)
 	temp_automaton.setAcceptStateNum(stoi(dataFile[i++]));
 	TempSize = temp_automaton.getAcceptStateNum();
 
-	vector <bool> Is_stateAccept(temp_automaton.getStatesNumbe());
+	vector <bool> Is_stateAccept(temp_automaton.getStatesNumbe());//S
 
-	for (int k=0; k < TempSize; k++)
+	for (int k=0; k < TempSize; k++)//S
 	{
 		Is_stateAccept[stoi(dataFile[i++])] = true;//need to know if the sates start with 0 or 1
 
@@ -43,7 +51,7 @@ Automaton Controller::buildTheAutomaton(vector<string> dataFile)
 	node *head=NULL;
 	node *tail = NULL;
 	
-	for ( j = 0; j < TempSize; j++)
+	for ( j = 0; j < TempSize; j++)//S
 	{
 		node* tmp = new node;
 		tmp->state = j;
@@ -77,7 +85,7 @@ Automaton Controller::buildTheAutomaton(vector<string> dataFile)
 	node* state;
 	int transition_Type,next_State, state_Index;
 
-	for ( int k=0; k < numberOfTr; k++)
+	for ( int k=0; k < numberOfTr; k++)//T
 	{
 		state_Index = (stoi(dataFile[i++]));
 		state = pointer_array[state_Index];

@@ -4,6 +4,15 @@
 #include <queue>
 #include <map>
 
+//sizes
+//K constants 
+//N bound variables 
+//L len of the word 
+//T transitions 
+//S number of states 
+//running time O(S*T)
+//memory comp  O(K+S)
+
 Equevilance::Equevilance(Automaton default_Automaton, Automaton lerner_Automaton)
 {
 	set_default_Automaton(default_Automaton);
@@ -15,10 +24,10 @@ Equevilance::Equevilance(Automaton default_Automaton, Automaton lerner_Automaton
 string Equevilance::execute_Equevilance()
 {
 	
-	extend_LAutomaton(&leanrer_Automaton,default_Automaton);
-	complement(default_Automaton);
-	cross=crossA(default_Automaton, &leanrer_Automaton);
-	result = emptiness(cross);
+	extend_LAutomaton(&leanrer_Automaton,default_Automaton);//O(N*S)
+	complement(default_Automaton);//O(S)
+	cross=crossA(default_Automaton, &leanrer_Automaton);//O(S)
+	result = emptiness(cross);//O(S*T)
 	if (result == "") {//if the first aggregation didn't get Counter example try the other way
 		leanrer_Automaton.restore_states();//restore what the first attempt changes 
 		complement(default_Automaton);//return the default to the original state 2 complement cancel each other
@@ -27,13 +36,7 @@ string Equevilance::execute_Equevilance()
 		result = emptiness(cross);
 	}
 	
-	for (int i = 0; i < result.size(); i++)//Converting counter word to concrete word
-	{
-		string s(1, result[i]);
-		if (!(std::find(default_Automaton.alphabetList.begin(), default_Automaton.alphabetList.end(), s) != default_Automaton.alphabetList.end()) ){
-			result[i] += 16;
-		}
-	}
+	
 	return result;
 }
 
@@ -43,7 +46,7 @@ void Equevilance::extend_LAutomaton(Automaton *leanrer_Automaton, Automaton defa
 	int LearnerVsize = leanrer_Automaton->getBoundVSize();
 	vector <string> alphabetList = default_Automaton.getAlphabetList();
 	int defaultVsize = default_Automaton.getBoundVSize();
-	while (LearnerVsize != defaultVsize) {//need to extend changed the =!to == for test
+	while (LearnerVsize != defaultVsize) { 
 		vector <node*> states =leanrer_Automaton->getPointerarray();
 
 		for (node* state : states)//state transition 
@@ -126,7 +129,7 @@ string Equevilance::emptiness(Automaton crossA)
 		{
 			if (!visited[neighbor.next_state->state] && neighbor.next_state!=NULL)
 			{
-				path_ofg_node[neighbor.next_state->state].push_back(path_ofg_node[state][0] + neighbor.transition_signal);
+				path_ofg_node[neighbor.next_state->state].push_back(path_ofg_node[state][0] + char(stoi(neighbor.transition_signal) + 64));
 				q.push(neighbor.next_state->state);
 				visited[neighbor.next_state->state] = true;
 			}
