@@ -195,18 +195,18 @@ string Controller::analyze_file(string Temp_argv_File_Location, char split_symbo
 		result = equevilance.execute_Equevilance();
 		if (result=="")
 		{
-			res = "Yes, the automata are equivalence";
+			res = "Yes, the Automata are equivalent";
 			
 			if (equivalence_result.WriteFile(res) == 1)
-				return "\nError Opning File! Results Not Saved!!";
+				return "\nError Opening File! Results Not Saved!!";
 			else
 				return res + "\nResults Saved To File " + equivalence_result.fileLocation;
 		}
 		else
 		{
-			res= "No, the automata are NOT equivalence.\nCounter example: "+result;
+			res= "No, the Automata are NOT equivalent.\nCounter example: "+result;
 			if (equivalence_result.WriteFile(res) == 1)
-				return "\nError Opning File! Results Not Saved!!";
+				return "\nError Opening File! Results Not Saved!!";
 			else
 				return res + "\nResults Saved To File " + equivalence_result.fileLocation;
 		}
