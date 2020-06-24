@@ -29,7 +29,7 @@ e1.place(relx = 0.68, rely = 0.65, anchor = CENTER)
 btnInitialize = Button(root, text ='Initialize',foreground="green", command = lambda:Initialze(),state=DISABLED)
 btnInitialize.place(relx = 0.5, rely = 0.8, anchor = CENTER)
 
-exitButton = Button(root, text="Exit",foreground="red", background="white", command = lambda:close_window(root))
+exitButton = Button(root, text="Exit",foreground="red", background="white", command = root.destroy)
 exitButton.place(x=410, y=220)
 
 
@@ -53,7 +53,7 @@ def Initialze():
     BtnRun = Button(Control_screen, text ='Execute Algorithm',foreground="green" ,command = lambda:RunAlg(),state=DISABLED)
     BtnRun.place(relx = 0.5, rely = 0.7, anchor = CENTER) 
 
-    exitButton = Button(Control_screen, text="Exit",foreground="red", background="white", command = lambda:close_window(Control_screen))
+    exitButton = Button(Control_screen, text="Exit",foreground="red", background="white", command = Control_screen.destroy)
     exitButton.place(x=410, y=220)
  
     
