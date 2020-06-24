@@ -10,7 +10,7 @@
 //N bound variables 
 //L len of the word 
 //T transitions 
-//running time O(L*K*T) 
+//running time O(L*T) 
 //memory comp O(L+N+K+T)
 
 MemberShip::MemberShip(vector<string> CwordsVec, Automaton default_Automaton)
@@ -22,14 +22,7 @@ MemberShip::MemberShip(vector<string> CwordsVec, Automaton default_Automaton)
 		set_multy_concrete_word(CwordsVec[i]);
 		string ptemp=convert_CTP(CwordsVec[i], default_Automaton.alphabetList, default_Automaton.boundVSize);
 		set_multy_pattern_word(ptemp);
-	}
-
-	//single concrete word and return a result 
-	//set_concrete_word(CwordsVec[0]);
-	
-	//this->pattern_word = convert_CTP(this->get_concrete_word(),default_Automaton.alphabetList,default_Automaton.boundVSize);
-	
-		
+	}		
 }
 
 MemberShip::MemberShip(Automaton default_Automaton)
@@ -49,11 +42,16 @@ bool MemberShip::execute_MemberShip(string Pword)
 	do
 	{
 		current_signal= Pword[current_signal_index];
-		if(current_signal =="x"){
+		if (current_signal == "0")//constant
+		{
+			current_signal = Pword[++current_signal_index];
+			flag = 0;
+		}
+		else if(current_signal =="x"){ //bonud variable
 			current_signal = Pword[++current_signal_index];
 			flag = 1;
 		}
-		else if (current_signal == "y")
+		else if (current_signal == "y")//free variable
 		{
 			current_signal = to_string(free_Variable_index);
 			flag = 1;
@@ -69,18 +67,6 @@ bool MemberShip::execute_MemberShip(string Pword)
 					current_state = current_state->Constant_Trans_list[i].next_state;
 					break;
 				}
-
-			/*
-			std::vector<string>::iterator it = std::find(constantsList.begin(), constantsList.end(), current_signal);
-			if (it != constantsList.end())//in case it is a constant use the constants trans list 
-			{
-				for(int i=0;i< current_state->Constant_Trans_list.size();i++)//T transitions 
-					if (current_state->Constant_Trans_list[i].transition_signal == current_signal)
-					{
-						current_state = current_state->Constant_Trans_list[i].next_state;
-						break;
-					}
-			}*/
 		}
 		else//if it is a bound variable or free variable
 		{
@@ -109,9 +95,10 @@ string MemberShip::convert_CTP(string concrete_word, vector<string> ConstsList, 
 	for (char& c : concrete_word) // L len of the word--> O(L*k),O(L*n)
 	{
 		//check if constant k constants 
-		std::vector<string>::iterator it = std::find(ConstsList.begin(), ConstsList.end(), c+"");
+		string s(1, c);
+		std::vector<string>::iterator it = std::find(ConstsList.begin(), ConstsList.end(), s);
 		if (it != ConstsList.end())
-			pattern_word += c;
+			pattern_word += "0"+c;
 		else {
 			//check if its assigned to a bound variable n bound variables 
 			std::vector<char>::iterator it = std::find(BoundVariables.begin(), BoundVariables.end(), c);
