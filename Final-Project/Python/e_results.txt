@@ -1,2 +1,2 @@
-No, the automatons are NOT equivalence.
-Counter example: q
+No, the automata are NOT equivalence.
+Counter example: A
