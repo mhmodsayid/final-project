@@ -111,28 +111,6 @@ Automaton Controller::buildTheAutomaton(vector<string> dataFile)//Decode Automat
 }
 
 
-void Controller::set_default_Automaton(Automaton automaton)
-{
-	default_Automaton = automaton;
-}
-
-void Controller::set_leanrer_Automaton(Automaton automaton)
-{
-	leanrer_Automaton = automaton;
-}
-
-
-
-
-Automaton Controller::get_default_Automaton()
-{
-	return default_Automaton;
-}
-
-Automaton Controller::get_leanrer_Automaton()
-{
-	return leanrer_Automaton;
-}
 
 //This method will analyze the input file and choose witch method needed to be run membership or equivalence
 // the method get the file location and the split_symbol
@@ -140,6 +118,7 @@ string Controller::analyze_file(string Temp_argv_File_Location, char split_symbo
 {
 	leanrer_Automaton_file.setFile(Temp_argv_File_Location);//set the input file location
 	vector<string> fileLines=leanrer_Automaton_file.ReadFile(split_symbol);//read and split the input file into vector fileLines
+	//file validation
 	if (fileLines.empty())
 		return "Error Input File is Empty!";
 	else if (fileLines[0] == "Error")
@@ -148,13 +127,16 @@ string Controller::analyze_file(string Temp_argv_File_Location, char split_symbo
 	string res = "";
 	bool membership_result{};
 	bool isMembership = 0;
-		if (fileLines.back().find(split_symbol) == string::npos && (fileLines.empty()==false) )//if the first line has "," then it's automata and need to run equivalence method
+	//if the first line has "split_symbol" then it's automaton-equivalnce query and need to run equivalence method else it is membeship query, run membership method
+		if (fileLines.back().find(split_symbol) == string::npos && (fileLines.empty()==false) )
 			isMembership = 1;
-		
+	
+	//membership query 
 	if (isMembership) {
-		MemberShip membership(fileLines,default_Automaton);//Create membership variable while set the default automata and the words vector
-		MemberShip_results.setFile("m_results.txt");//result file set
+		MemberShip membership(fileLines,default_Automaton);//membership constructor,set the default automaton and the concrete words vector
+		MemberShip_results.setFile("m_results.txt");//create new file for results 
 		
+		//handles multiple concrete words, ask membership about each word   
 		for (int i = 0; i < membership.Pwords.size(); i++)
 		{
 			string pword = membership.Pwords[i];
@@ -166,6 +148,7 @@ string Controller::analyze_file(string Temp_argv_File_Location, char split_symbo
 				res+= "No! " + membership.Cwords[i] + " does NOT belong to the default automaton!";
 			res += '\n';	
 		}
+		//write results to the file 
 		if (MemberShip_results.WriteFile(res) == 1)
 			return "Error opining File! Results Not Saved!!";
 		else 
@@ -186,7 +169,7 @@ string Controller::analyze_file(string Temp_argv_File_Location, char split_symbo
 			else
 				return res + "\nResults Saved To File " + equivalence_result.fileLocation;
 		}
-		else// there is counter example there are NOT equivalent
+		else// there is counter example automata are NOT equivalent
 		{
 			res= "No, the Automata are NOT equivalent.\nCounter example: "+result;
 			if (equivalence_result.WriteFile(res) == 1)
@@ -204,7 +187,6 @@ string Controller::analyze_file(string Temp_argv_File_Location, char split_symbo
 string Controller::initialze_System(string default_Automaton_File_Location,char split_symbol)
 {
 	default_Automaton_file.setFile(default_Automaton_File_Location);//set file location 
-	//FileManager file;
 	vector<string> dataFileContent = default_Automaton_file.ReadFile(split_symbol);//read file and analyze it and split it by split_symbol and insert to vector dataFileContent
 	if (dataFileContent.empty())
 		return "Error Default Automaton File is Empty!";
@@ -214,3 +196,24 @@ string Controller::initialze_System(string default_Automaton_File_Location,char 
 	set_default_Automaton(buildTheAutomaton(dataFileContent));// build the default automate from vector data and set it as default_Automaton
 	return "";
 }
+
+void Controller::set_default_Automaton(Automaton automaton)
+{
+	default_Automaton = automaton;
+}
+
+void Controller::set_leanrer_Automaton(Automaton automaton)
+{
+	leanrer_Automaton = automaton;
+}
+
+Automaton Controller::get_default_Automaton()
+{
+	return default_Automaton;
+}
+
+Automaton Controller::get_leanrer_Automaton()
+{
+	return leanrer_Automaton;
+}
+

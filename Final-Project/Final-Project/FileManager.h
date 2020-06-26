@@ -1,6 +1,5 @@
 #pragma once
 
-
 using namespace std;
 #include"FileManager.h"
 #include <vector>
@@ -18,9 +17,9 @@ public:
 	string fileLocation;
 	vector<string> ReadFile(char split_symbol);
 	int WriteFile(string result);
-	void setFile(string fileLocation);
-
+	
 private:
+	void setFile(string fileLocation);
 	
 };
 

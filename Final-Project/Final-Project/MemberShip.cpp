@@ -13,10 +13,13 @@
 //running time O(L*T) 
 //memory comp O(L+N+K+T)
 
+
+//membership constructor 
 MemberShip::MemberShip(vector<string> CwordsVec, Automaton default_Automaton)
 {
+	//save the default automaton in this class 
 	this->default_Automaton = default_Automaton;
-	//test multy concrete words and save results in txt file 
+	//set multiple concrete words in the class and convert each one to a pattern word  
 	for (int i = 0; i < CwordsVec.size(); i++)
 	{
 		set_multy_concrete_word(CwordsVec[i]);
@@ -25,20 +28,20 @@ MemberShip::MemberShip(vector<string> CwordsVec, Automaton default_Automaton)
 	}		
 }
 
-MemberShip::MemberShip(Automaton default_Automaton)
-{
-}
 
+//function receives a pattern word and excute a run on the default automaton, 
+//return true if it stops at accepting state else return false 
 bool MemberShip::execute_MemberShip(string Pword)
 {
 	
 	int current_signal_index = 0,flag=0;//flag determine if its 1-variable or 0-constant 
-	int free_Variable_index = default_Automaton.boundVSize + 1;
+	int free_Variable_index = default_Automaton.boundVSize + 1;//free variable index is number of bound variables + 1
 	string current_signal;
-	vector <node*> pointer_array = default_Automaton.getPointerarray();
+	vector <node*> pointer_array = default_Automaton.getPointerarray();//array of pointers helps reduce searching 
 	node* current_state = pointer_array[0];//initial state
-	vector<string> constantsList = this->default_Automaton.alphabetList;
+	vector<string> constantsList = this->default_Automaton.alphabetList;//constant list of the default automaton 
 	
+	//loop on the charcters of the pattern word 
 	do
 	{
 		current_signal= Pword[current_signal_index];
@@ -57,8 +60,7 @@ bool MemberShip::execute_MemberShip(string Pword)
 			flag = 1;
 		}
 			
-		//check if the signal is a constant or a bound variable 
-		//constantsList
+		//if it is a constant then search for tansition in the constant transition list 
 		if(!flag)
 		{
 			for (int i = 0; i < current_state->Constant_Trans_list.size(); i++)//T transitions 
@@ -68,7 +70,7 @@ bool MemberShip::execute_MemberShip(string Pword)
 					break;
 				}
 		}
-		else//if it is a bound variable or free variable
+		else//if it is a bound variable or free variable then search for tansition in the variable transition list 
 		{
 			for (int i = 0; i < current_state->Variable_Trans_list.size(); i++)
 				if (current_state->Variable_Trans_list[i].transition_signal == current_signal)
@@ -82,25 +84,28 @@ bool MemberShip::execute_MemberShip(string Pword)
 		flag = 0;
 	} while (Pword[current_signal_index]!='\0');
 
-	return current_state->is_accept;
+	return current_state->is_accept;//return state condition 
 }
 
-
+//function receives a concrete word, constant list of the default automaton and number of bound variables 
+//converts the concrete word to a pattern word and return it .
 string MemberShip::convert_CTP(string concrete_word, vector<string> ConstsList, int boundVSize)
 {
 	string pattern_word;
 	int j = 1,Bound_index=0;
-	vector<char> BoundVariables(boundVSize);
+	//a helper vector to determine the character each bound variable assigned t
+	//each bound variable represnted by the index 
+	vector<char> BoundVariables(boundVSize); 
 
-	for (char& c : concrete_word) // L len of the word--> O(L*k),O(L*n)
+	for (char& c : concrete_word)
 	{
-		//check if constant k constants 
+		//check if constant- if it is save it to the pattern word 
 		string s(1, c);
 		std::vector<string>::iterator it = std::find(ConstsList.begin(), ConstsList.end(), s);
 		if (it != ConstsList.end())
 			pattern_word += "0"+c;
 		else {
-			//check if its assigned to a bound variable n bound variables 
+			//check if its assigned to a bound variable using the helper vector  
 			std::vector<char>::iterator it = std::find(BoundVariables.begin(), BoundVariables.end(), c);
 			if (it != BoundVariables.end()) {
 				int index = std::distance(BoundVariables.begin(), it);
@@ -114,8 +119,7 @@ string MemberShip::convert_CTP(string concrete_word, vector<string> ConstsList, 
 					BoundVariables[Bound_index] = c;
 					Bound_index++;
 					pattern_word += "x" + to_string(Bound_index);
-					//BoundVariables[Bound_index-1] = c;
-				}
+				}//if there is no more bound variables index to assign then the rest character are free variables 
 				else
 				{
 					pattern_word += "y";

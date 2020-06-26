@@ -12,7 +12,6 @@ using namespace std;
 class Controller
 {
 public:
-	//Automaton buildTheAutomaton(FileManager & location, char split_symbol);
 	Automaton buildTheAutomaton(vector<string> Content);
 	string analyze_file(string Temp_argv_File_Location, char split_symbol);
 	string initialze_System(string fileLocation, char split_symbol);
@@ -21,7 +20,6 @@ public:
 private:
 	Automaton default_Automaton;
 	Automaton leanrer_Automaton;
-	//FileManager result_file;
 	FileManager default_Automaton_file;
 	FileManager leanrer_Automaton_file;
 	FileManager MemberShip_results;

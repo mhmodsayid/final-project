@@ -1,20 +1,6 @@
 
 #include "Automaton.h"//implantation of the header
 
-Automaton::Automaton()//default constructor
-{
-	
-}
-
-Automaton::Automaton(int x)//overload constructor//initial y before the constructor block
-{
-
-}
-
-
-Automaton::~Automaton() {//destructor
-
-}
 
 
 void Automaton::restore_states()
@@ -25,8 +11,6 @@ void Automaton::restore_states()
         
     }
 }
-
-
 
 int Automaton::getBoundVSize() const
 {
@@ -48,8 +32,6 @@ void Automaton::setAlphabetSize(int alphabetSize)
     this->alphabetSize = alphabetSize;
 }
 
-
-
 int Automaton::getStatesNumbe() const
 {
     return statesNumbe;
@@ -70,8 +52,6 @@ void Automaton::setAcceptStateNum(int acceptStateNum)
     this->acceptStateNum = acceptStateNum;
 }
 
-
-
 int Automaton::getTransNum() const
 {
     return transNum;
@@ -81,8 +61,6 @@ void Automaton::setTransNum(int transNum)
 {
     this->transNum = transNum;
 }
-
-
 
 vector<string> Automaton::getAlphabetList() const
 {
