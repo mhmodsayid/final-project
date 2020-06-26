@@ -17,14 +17,13 @@ Equevilance::Equevilance(Automaton default_Automaton, Automaton lerner_Automaton
 {
 	set_default_Automaton(default_Automaton);
 	set_leanrer_Automaton(lerner_Automaton);
-	//set the automatons 
+	//set the automaton
 }
 
-
-string Equevilance::execute_Equevilance()
+string Equevilance::execute_Equevilance()//main Equivalence method
 {
 	
-	extend_LAutomaton(&leanrer_Automaton,default_Automaton);//O(N*S)
+	extend_LAutomaton(&leanrer_Automaton,default_Automaton);//O(N*S)//call extend method with learner and default 
 	complement(default_Automaton);//O(S)
 	cross=crossA(default_Automaton, &leanrer_Automaton);//O(S)
 	result = emptiness(cross);//O(S*T)
@@ -135,7 +134,6 @@ string Equevilance::emptiness(Automaton crossA)
 			}
 		}
 	}
-
 	return "";
 }
 
@@ -148,8 +146,6 @@ Automaton Equevilance::get_leanrer_Automaton()
 {
 	return Automaton();
 }
-
-
 
 void Equevilance::set_default_Automaton(Automaton automaton)
 {
