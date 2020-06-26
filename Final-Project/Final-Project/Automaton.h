@@ -52,6 +52,7 @@ public:
 	int statesNumbe;
 	int acceptStateNum;
 	int transNum;
+	int freeVariableShifter = 0;
 		
 	void restore_states();
     int getBoundVSize() const; 
@@ -64,7 +65,6 @@ public:
 	vector <node*> getPointerarray() const;
 	
 
-private: 
 	void setBoundVSize(int boundVSize);
 	void setAlphabetSize(int alphabetSize);
 	void setStatesNumbe(int statesNumbe);

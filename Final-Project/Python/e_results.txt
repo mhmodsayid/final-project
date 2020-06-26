@@ -1,2 +1,2 @@
 No, the Automata are NOT equivalent.
-Counter example: A
+Counter example: AA
